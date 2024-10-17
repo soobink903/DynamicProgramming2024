@@ -1,0 +1,371 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+
+\usepackage{amsmath, amsfonts, microtype, nicefrac, amssymb, amsthm, centernot}
+
+\usepackage{pgfpages}
+
+\usepackage{helvet}
+\usepackage[default]{lato}
+\usepackage{array}
+
+\usefonttheme[onlymath]{serif}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{bm}
+
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{multimedia}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bbm}
+\newcolumntype{d}[0]{D{.}{.}{5}}
+
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{booktabs}
+
+\usepackage{setspace}
+
+\usepackage{transparent}
+
+
+%%% FIGURES %%%
+\usepackage{caption, subcaption}
+\usepackage{booktabs, siunitx}
+\usepackage{pgfplots} 
+%\usepackage[outdir=./figures]{epstopdf}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[absolute, overlay]{textpos}
+\usepackage{epstopdf}
+
+
+%%% TIKZ %%%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{bending}
+\usetikzlibrary{snakes}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{matrix, shapes, arrows, fit, tikzmark}
+
+
+%%% ALGORITHM %%%
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{multimedia}
+
+
+%%% APPENDIX SLIDE NUMBERING %%%
+\usepackage{appendixnumberbeamer}
+
+
+%%% BEAMER BUTTON %%%
+%\setbeamertemplate{button}{\tikz
+	%\node[
+	%	inner xsep = 2pt, 
+	%	draw = structure!0, 
+	%	fill = myblue, 
+	%	rounded corners = 4pt]{\color{white} \tiny\insertbuttontext};
+	%}
+
+
+%%% COLORS %%%
+\definecolor{blue}{RGB}{0,38,118}
+\definecolor{red}{RGB}{213,94,0}
+\definecolor{yellow}{RGB}{240,228,66}
+\definecolor{green}{RGB}{0,158,115}
+
+\definecolor{myred}{RGB}{163,32,45}
+\definecolor{navyblue}{rgb}{0.05,0.2,0.70}
+\definecolor{myblue}{RGB}{0,51,150}
+\definecolor{myorange}{RGB}{255,140,0}
+\definecolor{myref}{RGB}{160,160,160}
+\definecolor{shock}{RGB}{0, 125, 34}%{50, 168, 82}
+
+\definecolor{background}{RGB}{255,253,218}
+
+% Define a new transparent color
+\definecolor{trans}{rgb}{1,1,1}
+\colorlet{trans}{black!20} % 0 percent opacity
+
+\hypersetup{
+  colorlinks=false,
+  linkbordercolor = {white},
+  linkcolor = {blue}
+}
+
+\setbeamercolor{frametitle}{fg=blue}
+\setbeamercolor{title}{fg=black}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{itemize items}{-}
+\setbeamercolor{itemize item}{fg=blue}
+\setbeamercolor{itemize subitem}{fg=blue}
+\setbeamercolor{enumerate item}{fg=blue}
+\setbeamercolor{enumerate subitem}{fg=blue}
+\setbeamercolor{button}{bg=background, fg=blue,}
+
+%\setbeamercolor{background canvas}{bg=background}
+
+
+%%% FRAME TITLE %%%
+\setbeamerfont{title}{series=\bfseries, parent=structure}
+\setbeamerfont{frametitle}{series=\bfseries, parent=structure}
+
+
+%%% TRANSITION FRAME %%%
+\newenvironment{transitionframe}{
+	\setbeamercolor{background canvas}{bg=blue}
+	\begin{frame}
+		\thispagestyle{empty}
+		\addtocounter{framenumber}{-1}
+		\vspace{42mm}
+		\hspace{4mm} }{
+		\begin{tikzpicture}
+			\tikz \fill [white] (1,6) rectangle (20,10);
+		\end{tikzpicture}
+	\end{frame}
+}
+
+
+%%% OUTLINE %%%
+\AtBeginSection[]
+{
+	\begin{frame}
+       \frametitle{Roadmap of Talk}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+\setbeamercolor{section in toc}{fg=blue}
+\setbeamercolor{subsection in toc}{fg=red}
+\setbeamersize{text margin left=1em,text margin right=1em} 
+
+
+%%% ENVIRONMENTS
+\newenvironment{witemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+
+\makeatother
+\setbeamertemplate{itemize items}{\large\raisebox{0mm}{\textbullet}}
+\setbeamertemplate{itemize subitem}{\footnotesize\raisebox{0.15ex}{--}}
+\setbeamertemplate{itemize subsubitem}{\Tiny\raisebox{0.7ex}{$\blacktriangleright$}}
+
+\setbeamertemplate{enumerate item}[default]
+\setbeamertemplate{enumerate subitem}{\textbullet}
+\makeatletter
+
+% ITEMIZE SPACING:
+% \usepackage{xpatch}
+% \xpatchcmd{\itemize}
+% {\def\makelabel}
+% {\setlength{\itemsep}{0mm}\def\makelabel}
+% {}
+% {}
+
+
+%%% PRETTY ENUMERATE %%%
+% \usepackage{stackengine,xcolor}
+% \newcommand\circnum[2]{\stackinset{c}{}{c}{.1ex}{\small\textcolor{white}{#2}}%
+	% 	{\abovebaseline[-.7ex]{\Huge\textcolor{#1}{$\bullet$}}}}
+% \newenvironment{myenum}
+% {\let\svitem\item
+	% 	\renewcommand\item[1][black]{%
+		% 		\refstepcounter{enumi}\svitem[\circnum{##1}{\theenumi}]}%
+	% 	\begin{enumerate}}{\end{enumerate}}
+\usepackage{stackengine,xcolor,graphicx}
+\newcommand\circnum[2]{\smash{\stackinset{c}{}{c}{.2ex}{\small\textcolor{white}{#2}}%
+		{\abovebaseline[-1.1ex]{\Huge\textcolor{#1}{\scalebox{1.5}{$\bullet$}}}}}}
+\newenvironment{myenum}
+{\let\svitem\item
+	\renewcommand\item[1][black]{%
+		\refstepcounter{enumi}\svitem[\circnum{##1}{\theenumi}]}%
+	\begin{enumerate}}{\end{enumerate}}
+
+\newcommand{\notimplies}{\;\not\!\!\!\implies}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  TITLE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[]{\\[8pt]
+	{\large \color{blue} Dynamic Programming and Applications \\[5pt] \normalfont{Applications} \\[10pt] \normalfont{Lecture 7}}}
+\author[Schaab]{Andreas Schaab}
+\institute{}
+\subject{}
+\date{}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%  BEGIN DOC   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%% TIKZ %%% 
+\tikzstyle{every picture}+=[remember picture]
+%\everymath{\displaystyle}
+
+\tikzset{   
+	every picture/.style={remember picture,baseline},
+	every node/.style={anchor=base,align=center,outer sep=1.5pt},
+	every path/.style={thick},
+}
+\newcommand\marktopleft[1]{%
+	\tikz[overlay,remember picture] 
+	\node (marker-#1-a) at (-.3em,.3em) {};%
+}
+\newcommand\markbottomright[2]{%
+	\tikz[overlay,remember picture] 
+	\node (marker-#1-b) at (0em,0em) {};%
+}
+\tikzstyle{every picture}+=[remember picture] 
+\tikzstyle{mybox} =[draw=black, very thick, rectangle, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[draw=black,fill=red, text=white]
+
+
+\addtocounter{framenumber}{-1}
+\thispagestyle{empty}
+\maketitle 
+\newpage
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Outline}
+\thispagestyle{empty}
+\addtocounter{framenumber}{-1}
+
+Part 1: Stochastic processes, Brownian motion, and stochastic differential equations
+\begin{enumerate}
+	\item Stochastic processes in continuous time
+	\item Continuous time Markov chains
+	\item Brownian motion
+	\item Diffusion processes 
+	\item Ito's Lemma
+	\item Poisson processes
+	\item The generator of a stochastic process
+\end{enumerate}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Outline}
+\thispagestyle{empty}
+\addtocounter{framenumber}{-1}
+
+Part 2: Optimization with stochastic dynamics
+\begin{enumerate}
+	\item Stochastic neoclassical growth model
+	\item Stochastic neoclassical growth with diffusion process
+	\item Stochastic neoclassical growth with Poisson process
+\end{enumerate}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Real Business Cycles}
+\begin{witemize}
+\item Next semester, Yuriy will teach the Real Business Cycle model. This is basically the stochastic neoclassical growth model, estimated to match business cycle moments 
+
+\item Recall that this model is efficient so we can look at the planning problem
+
+\item Preferences are:
+\begin{equation*}
+	\mathbb E_0 \int_0^\infty e^{- \rho t} u(c_t) dt
+\end{equation*}
+
+\item And combining technologies and resource constraints yields:
+\begin{equation*}
+	dk_t = \Big[ f(k_t, z_t) - \delta k_t - c_t \Big] dt
+\end{equation*}
+
+\item Now suppose TFP follows a Feller process: $dz_t = \theta(\bar z - z_t) dt + \sigma \sqrt{z_t} dB_t$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item With $dz_t = {\color{blue} \theta(\bar z - z_t) } dt + {\color{red} \sigma \sqrt{z_t} } dB_t$, the HJB is then given by:
+\begin{equation*}
+	\rho V(k, z) = \max_c \bigg\{ u(c) + \Big[ f(k, z) - \delta k - c \Big] V_k(k, z) + {\color{blue} \theta(\bar z - z) } V_z(k, z) + \frac{1}{2} {\color{red} \sigma^2 z } V_{zz}(k, z) \bigg\}
+\end{equation*}
+
+\item We have now seen 3 variants of this model with 3 different assumptions for the process $dz_t$
+
+\item This model is the foundation for business cycle macro 
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AK Technology and Log Utility}
+\begin{witemize}
+\item Assume that $u(c_t) = \log c_t$ and $f(k_t, z_t) = z_t k_t$
+
+\item Assuming that $dz_t$ follows a stationary diffusion process:
+\begin{equation*}
+	\rho V(k, z) = \max_c \bigg\{ \log c + \Big[ f(k, z) - \delta k - c \Big] V_k(k, z) + \mu(z) V_z(k, z) + \frac{1}{2} \sigma(z)^2 V_{zz}(k, z) \bigg\}
+\end{equation*}
+
+\item Show that the consumption policy function is:
+\begin{equation*}
+	c(k, z) = \rho k
+\end{equation*}
+
+\item As a result, model solution characterized by the two \textit{forward} equations:
+\begin{align*}
+	dk_t &= (z_t - \rho - \delta) k_t dt \\
+	dz_t &= \mu(z_t) dt + \sigma(z_t) dB_t
+\end{align*}
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\textbf{Proof:}
+\begin{witemize}
+\item Guess and verify:
+\begin{equation*}
+	V(k, z) = v(z) + A \log k
+\end{equation*}
+
+\item FOC: 
+\begin{equation*}
+	u'(c(k, z)) = V_k(k, z) 
+	\quad \implies \quad
+	\frac{1}{c(k, z)} = A \frac{1}{k}
+	\quad \implies \quad
+	c(k, z) = \frac{1}{A} k
+\end{equation*}
+
+\item Plug back into HJB: 
+\begin{equation*}
+\rho v(z) + \rho A \log k = \log \frac{1}{A} + \log k + (z - \frac{1}{A} - \delta) k A \frac{1}{k} + \mu(z) v'(z) + \frac{1}{2} \sigma(z)^2 v''(z)
+\end{equation*}
+
+\item Collect terms in $\log k$ and confirm $\rho A = 1$. Solve ODE for $v(z)$!
+
+\item Economics: log preferences $\implies$ income and substitution effects of future $z_t$ changes cancel $\implies$ constant savings rate $\rho$
+\end{witemize}
+\end{frame}
+
+
+
+
+
+
+
+\end{document}

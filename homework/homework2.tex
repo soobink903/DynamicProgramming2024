@@ -1,0 +1,245 @@
+\documentclass[11pt]{extarticle}
+\usepackage{fullpage,amsmath,amsfonts,microtype,nicefrac,amssymb, amsthm}
+\usepackage[left=1in, bottom=1in, top=1in, right = 1in]{geometry}
+\usepackage{textcomp}
+\usepackage{mathpazo}
+\usepackage{mathrsfs}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+
+\usepackage{microtype}
+
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{enumerate}
+\usepackage{ragged2e}
+
+\setlength{\parindent}{24pt}
+\setlength{\jot}{8pt}
+
+
+\usepackage[shortlabels]{enumitem}
+
+
+%% FOOTNOTES
+\usepackage[bottom]{footmisc}
+\usepackage{footnotebackref}
+
+
+%% FIGURE ENVIRONMENT
+%\graphicspath{{}}
+\usepackage[margin=15pt, font=small, labelfont={bf}, labelsep=period]{caption}
+\usepackage{subcaption}
+\captionsetup[figure]{name={Figure}, position=above}
+\usepackage{float}
+\usepackage{epstopdf}
+
+
+%% NEW COMMANDS
+\renewcommand{\baselinestretch}{1.25} 
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\indep}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+\renewcommand{\b}{\begin}
+\newcommand{\e}{\end}
+
+%% NEWTHEOREM
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{cor}[thm]{Corollary}
+
+%% LINKS and COLORS
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\definecolor{myred}{RGB}{163, 32, 45}
+\hypersetup{
+	%backref=true,
+	%pagebackref=true,
+	colorlinks=true,
+	urlcolor=myred,
+	citecolor=myred, 
+	linktoc=all,     
+	linkcolor=myred,
+}
+
+%% TABLE OF CONTENTS
+\addto\captionsenglish{
+	\renewcommand{\contentsname}
+	{}% This removes the heading over the table of contents.
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%            END PREAMBLE           %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{202A: Dynamic Programming and Applications\\[5pt] {\Large \textbf{Homework \#2}}}
+
+\author{Andreas Schaab\footnote{
+	UC Berkeley. Email: schaab@berkeley.edu.\\
+	This course builds on the excellent teaching material developed, in particular, by David Laibson and Benjamin Moll. I would also like to thank Gabriel Chodorow-Reich, Pablo Kurlat, J\'on Steinsson, and Gianluca Violante, as well as QuantEcon, on whose teaching material I have drawn. 
+}}
+
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1: Consumption-Savings with Deterministic Income}
+
+Consider an economy populated by a continuum of infinitely lived households. There is no uncertainty in this economy for now. Households' preferences are given by
+\begin{equation*}
+	\max \int_0^\infty e^{-\rho t} u(c_t) dt.
+\end{equation*}
+That is, households discount future consumption $c_t$ at a rate $\rho$. Oftentimes, we will use constant relative risk aversion (CRRA) preferences, given by
+\begin{equation*}
+	u(c_t) = \frac{c_t^{1-\gamma}}{1-\gamma}.
+\end{equation*}
+A special form of these preferences are log preferences, 
+\begin{equation*}
+	u(c_t) = \log(c_t). 
+\end{equation*}
+
+
+The household's flow budget constraint in this economy is given by
+\begin{equation*}
+	\frac{d}{dt}(P_t a_t) = i_t (P_t a_t) - P_t c_t + P_t y_t,
+\end{equation*}
+where $P_t$ is the nominal price level, $c_t$ is real consumption expenditures, $a_t$ is the real wealth of the household and $\{y_t\}$ is an \textbf{exogenous} stream of income whose future path the household knows at any time point with certainty (because there is no uncertainty or risk for now).
+
+
+\vspace{5mm}
+\begin{enumerate}
+\item [(a)] Derive the budget constraint for real wealth, i.e., $\frac{d}{dt} a_t = \dot a_t$. Define the real interest rate as $r_t = i_t - \pi_t$, where $\pi_t \equiv \frac{\dot P_t}{P_t}$ is price inflation.
+	
+\item [(b)] Derive the lifetime budget constraint
+	
+\item [(c)] In class, we have so far always worked with the flow budget constraint as our constraint. And then we used either calculus of variations or optimal control theory. Alterantively, we can use the lifetime budget constraint as our constraint in this setting. (Why? When would you not be able to work with a lifetime budget constraint?) Set up the optimization problem with the lifetime budget constraint (i.e., write down the Lagrangian and introduce a multiplier) and take the first-order conditions. Solve for a consumption Euler equation. 
+	
+\item [(d)] Consider the two functional forms given earlier for utility, $u(c_t)$. Plug them into the Euler equation and solve for the term $\frac{u'(c_t)}{ u''(c_t) c_t}$.
+\end{enumerate}
+
+
+\vspace{6mm}
+\noindent
+We will now derive the simple Euler equation using two different approaches. The first approach will be using optimal control theory. In Problem 2, we will then use dynamic programming and confirm that the two approaches are equivalent.
+
+\vspace{5mm}
+\begin{enumerate}
+\item [(e)] Write down the optimal control problem. Identify the state, control variables and multipliers.
+	
+\item [(f)] Write down the (current-value) Hamiltonian.
+	
+\item [(g)] Find the FOCs. Rearrange and again find the consumption Euler equation. Confirm that it's the same equation we derived above. 
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 2: Consumption-Savings using Dynamic Programming}
+
+We concluded Problem 1 by deriving the household's consumption Euler equation using optimal control theory. We will now do the same using dynamic programming.
+
+
+Consider again the preferences of our household, given by
+\begin{equation*}
+	V_0 = \max_{\{c_t\}_{t>0}} \int_0^\infty e^{-\rho t} u(c_t) dt,
+\end{equation*}
+as well as the flow budget constraint
+\begin{equation*}
+	\dot a_t = r_t a_t + y_t - c_t,
+\end{equation*}
+where the household takes the (deterministic) paths of real interest rates $\{r_t\}$ and income $\{y_t\}$ as given.
+
+
+We will now derive a recursive representation of the household's value function, and use the resulting Hamilton-Jacobi-Bellman (HJB) equation to derive the consumption Euler equation.
+
+
+\vspace{2mm}
+\begin{enumerate}[(a)] 
+\item We will derive a recursive representation for the household value function $V_t(a) = V(t, a)$. Why does the value function take this form in this context? I.e., why does $V$ depend explicitly on calendar time, and why are we working with a representation of the problem where $a$ is the only state variable?
+
+\item In class, we derived the HJB heuristically, starting with a discrete time Bellman equation and taking the continuous time limit. We will now derive the HJB equation from the sequence problem. Recall in Lecture 1 we derived the Bellman equation from the sequence problem in discrete time. Please follow the same general proof strategy and derive the HJB in continuous time. You should arrive at the following HJB equation: 
+\begin{equation*}
+	\rho V_t(a) = \partial_t V_t(a) + \max_c \bigg\{ u(c) + \Big[ r_t a + y_t - c \Big] \partial_a V_t(a) \bigg\}
+\end{equation*}
+where $\partial_x$ denotes the partial derivative with respect to $x$. 
+
+\item Why is there a $\partial_t V_t(a)$ term? 
+
+\item Write down the FOC for consumption and interpret every term. Define and discuss the consumption policy function. 
+
+\item Plug the consumption policy function back into the HJB. Discuss why this is now a non-linear partial differential equation. 
+	
+\item Take the envelope condition by differentiating the HJB with respect to $a$. 
+
+\item Use the chain rule to characterize $\frac{d}{dt} V(t, a_t)$, taking into account explicitly that $a_t$ is also a function of time. 
+
+\item You will now arrive at the consumption Euler equation by combining 3 equations: the characterization of $\frac{d}{dt} V_t(a_t)$ from the previous part, the FOC, and the envelope condition.
+
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 3: Oil Extraction}
+
+Time is continuous and indexed by $t \in [0, \infty)$. At time $t=0$, there is a finite amount of oil $x_0$. Denote by $c_t$ the rate of oil consumption at date $t$. Oil is non-renewable, so the remaining amount of oil at date $t$ is 
+\begin{equation*}
+	x_t = x_0 - \int_0^t c_s ds.
+\end{equation*}
+A social planner (the government) wants to set the rate of oil consumption to maximize utility of the representative household given by
+\begin{equation*}
+	\int_0^\infty e^{- \rho t} u(c_t) dt,
+\end{equation*}
+with $u(c) = \log(c)$. 
+
+\vspace{2mm}
+\begin{enumerate}[(a)]
+\item Explain the expression for the remaining amount of oil: $x_t = x_0 - \int_0^t c_s ds$
+
+\item Set up the (present-value) Hamiltonian for this problem. List all state variables, control variables, and multipliers
+
+\item Write down the first-order necessary conditions. Solve for the optimal policy $c_t$
+
+\item Write down the HJB equation for this problem
+
+\item Guess and verify that the value function is $V(x) = a + b \log(x)$. Solve for $a$ and $b$
+\end{enumerate}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

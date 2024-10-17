@@ -1,0 +1,1632 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+
+\usepackage{amsmath, amsfonts, microtype, nicefrac, amssymb, amsthm, centernot}
+
+\usepackage{pgfpages}
+
+\usepackage{helvet}
+\usepackage[default]{lato}
+\usepackage{array}
+
+\usefonttheme[onlymath]{serif}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{bm}
+
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{multimedia}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{bbm}
+\newcolumntype{d}[0]{D{.}{.}{5}}
+
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{booktabs}
+
+\usepackage{setspace}
+
+\usepackage{transparent}
+
+
+%%% FIGURES %%%
+\usepackage{caption, subcaption}
+\usepackage{booktabs, siunitx}
+\usepackage{pgfplots} 
+%\usepackage[outdir=./figures]{epstopdf}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[absolute, overlay]{textpos}
+\usepackage{epstopdf}
+
+
+%%% TIKZ %%%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{bending}
+\usetikzlibrary{snakes}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{matrix, shapes, arrows, fit, tikzmark}
+
+
+%%% ALGORITHM %%%
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{multimedia}
+
+
+%%% APPENDIX SLIDE NUMBERING %%%
+\usepackage{appendixnumberbeamer}
+
+
+%%% BEAMER BUTTON %%%
+%\setbeamertemplate{button}{\tikz
+	%\node[
+	%	inner xsep = 2pt, 
+	%	draw = structure!0, 
+	%	fill = myblue, 
+	%	rounded corners = 4pt]{\color{white} \tiny\insertbuttontext};
+	%}
+
+
+%%% COLORS %%%
+\definecolor{blue}{RGB}{0,38,118}
+\definecolor{red}{RGB}{213,94,0}
+\definecolor{yellow}{RGB}{240,228,66}
+\definecolor{green}{RGB}{0,158,115}
+
+\definecolor{myred}{RGB}{163,32,45}
+\definecolor{navyblue}{rgb}{0.05,0.2,0.70}
+\definecolor{myblue}{RGB}{0,51,150}
+\definecolor{myorange}{RGB}{255,140,0}
+\definecolor{myref}{RGB}{160,160,160}
+\definecolor{shock}{RGB}{0, 125, 34}%{50, 168, 82}
+
+\definecolor{background}{RGB}{255,253,218}
+
+% Define a new transparent color
+\definecolor{trans}{rgb}{1,1,1}
+\colorlet{trans}{black!20} % 0 percent opacity
+
+\hypersetup{
+  colorlinks=false,
+  linkbordercolor = {white},
+  linkcolor = {blue}
+}
+
+\setbeamercolor{frametitle}{fg=blue}
+\setbeamercolor{title}{fg=black}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{itemize items}{-}
+\setbeamercolor{itemize item}{fg=blue}
+\setbeamercolor{itemize subitem}{fg=blue}
+\setbeamercolor{enumerate item}{fg=blue}
+\setbeamercolor{enumerate subitem}{fg=blue}
+\setbeamercolor{button}{bg=background, fg=blue,}
+
+%\setbeamercolor{background canvas}{bg=background}
+
+
+%%% FRAME TITLE %%%
+\setbeamerfont{title}{series=\bfseries, parent=structure}
+\setbeamerfont{frametitle}{series=\bfseries, parent=structure}
+
+
+%%% TRANSITION FRAME %%%
+\newenvironment{transitionframe}{
+	\setbeamercolor{background canvas}{bg=blue}
+	\begin{frame}
+		\thispagestyle{empty}
+		\addtocounter{framenumber}{-1}
+		\vspace{42mm}
+		\hspace{4mm} }{
+		\begin{tikzpicture}
+			\tikz \fill [white] (1,6) rectangle (20,10);
+		\end{tikzpicture}
+	\end{frame}
+}
+
+
+%%% OUTLINE %%%
+\AtBeginSection[]
+{
+	\begin{frame}
+       \frametitle{Roadmap of Talk}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+\setbeamercolor{section in toc}{fg=blue}
+\setbeamercolor{subsection in toc}{fg=red}
+\setbeamersize{text margin left=1em,text margin right=1em} 
+
+
+%%% ENVIRONMENTS
+\newenvironment{witemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+
+\makeatother
+\setbeamertemplate{itemize items}{\large\raisebox{0mm}{\textbullet}}
+\setbeamertemplate{itemize subitem}{\footnotesize\raisebox{0.15ex}{--}}
+\setbeamertemplate{itemize subsubitem}{\Tiny\raisebox{0.7ex}{$\blacktriangleright$}}
+
+\setbeamertemplate{enumerate item}[default]
+\setbeamertemplate{enumerate subitem}{\textbullet}
+\makeatletter
+
+% ITEMIZE SPACING:
+% \usepackage{xpatch}
+% \xpatchcmd{\itemize}
+% {\def\makelabel}
+% {\setlength{\itemsep}{0mm}\def\makelabel}
+% {}
+% {}
+
+
+%%% PRETTY ENUMERATE %%%
+% \usepackage{stackengine,xcolor}
+% \newcommand\circnum[2]{\stackinset{c}{}{c}{.1ex}{\small\textcolor{white}{#2}}%
+	% 	{\abovebaseline[-.7ex]{\Huge\textcolor{#1}{$\bullet$}}}}
+% \newenvironment{myenum}
+% {\let\svitem\item
+	% 	\renewcommand\item[1][black]{%
+		% 		\refstepcounter{enumi}\svitem[\circnum{##1}{\theenumi}]}%
+	% 	\begin{enumerate}}{\end{enumerate}}
+\usepackage{stackengine,xcolor,graphicx}
+\newcommand\circnum[2]{\smash{\stackinset{c}{}{c}{.2ex}{\small\textcolor{white}{#2}}%
+		{\abovebaseline[-1.1ex]{\Huge\textcolor{#1}{\scalebox{1.5}{$\bullet$}}}}}}
+\newenvironment{myenum}
+{\let\svitem\item
+	\renewcommand\item[1][black]{%
+		\refstepcounter{enumi}\svitem[\circnum{##1}{\theenumi}]}%
+	\begin{enumerate}}{\end{enumerate}}
+
+\newcommand{\notimplies}{\;\not\!\!\!\implies}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  TITLE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[]{\\[8pt]
+	{\large \color{blue} Dynamic Programming and Applications \\[5pt] \normalfont{Discrete Time Dynamics and Optimization} \\[10pt] \normalfont{Lecture 2}}}
+\author[Schaab]{Andreas Schaab}
+\institute{}
+\subject{}
+\date{}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%  BEGIN DOC   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%% TIKZ %%% 
+\tikzstyle{every picture}+=[remember picture]
+%\everymath{\displaystyle}
+
+\tikzset{   
+	every picture/.style={remember picture,baseline},
+	every node/.style={anchor=base,align=center,outer sep=1.5pt},
+	every path/.style={thick},
+}
+\newcommand\marktopleft[1]{%
+	\tikz[overlay,remember picture] 
+	\node (marker-#1-a) at (-.3em,.3em) {};%
+}
+\newcommand\markbottomright[2]{%
+	\tikz[overlay,remember picture] 
+	\node (marker-#1-b) at (0em,0em) {};%
+}
+\tikzstyle{every picture}+=[remember picture] 
+\tikzstyle{mybox} =[draw=black, very thick, rectangle, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[draw=black,fill=red, text=white]
+
+
+\addtocounter{framenumber}{-1}
+\thispagestyle{empty}
+\maketitle 
+\newpage
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Outline}
+\thispagestyle{empty}
+\addtocounter{framenumber}{-1}
+
+Part 1: difference equations
+\begin{enumerate}
+	\item Stochastic processes
+	\item Markov chains
+	\item Difference equations
+	\item Stochastic difference equations
+\end{enumerate}
+
+\vspace{5mm} 
+Part 2: stochastic dynamic programming
+\begin{enumerate}
+	\item Stochastic dynamic programming
+	\item History notation
+	\item The stochastic neoclassical growth model
+	\item Application: optimal stopping problem
+\end{enumerate}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{transitionframe}
+	{\color{white} \Huge \textbf{Part 1: difference equations} \vspace{2mm}}
+\end{transitionframe}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{1. Stochastic processes}
+\begin{witemize}
+\item Let $X_t$ be a random variable that is time $t$ adapted
+
+\item Discrete time: We index time discretely $t = 0, 1, 2, \ldots, T \leq \infty$
+
+\item Stochastic process in discrete time: a sequence of random variables indexed by $t$, $\{X_t\}_{t=0}^T$
+
+\item Continuous time: We index time continuously $t \in [0, T]$ with $T \leq \infty$
+
+\item Stochastic process in continuous time: a sequence of random variables indexed by $t$, $\{X_t\}_{t \geq 0}$
+
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2. Markov chains}
+\begin{witemize}
+\item A stochastic process $\{X_t\}$ has the \textit{Markov property} if for all $k \geq 1$ and all $t$:
+\begin{equation*}
+	\mathbb P(X_{t+1} = x \mid X_t, X_{t-1}, \ldots, X_{t-k}) = \mathbb P(X_{t+1} = x \mid X_t)
+\end{equation*}
+
+\item \textit{State space} of the Markov process = set of events or states that it visits 
+
+\item A Markov chain is a Markov process (stochastic process with Markov property) that visits a finite number of states (\textit{discrete state space})
+
+\item Simplest example: Individual $i$ is randomly hit by earnings (employment) shocks and switches between $X_t \in \{X^L, X^H\}$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Markov chains have a \textit{transition matrix} $P$ that describes the probability of transitioning from state $i$ to state $j$
+
+\item Simplest example with state space $\{X^L, X^H\}$
+\begin{equation*}
+	P = \begin{pmatrix} 0.8 & 0.2 \\ 0.2 & 0.8 \end{pmatrix}
+\end{equation*}
+
+\item This says: P of staying in employment state = $0.8$, P of switching = $0.2$
+
+\item $P_{ij}$ is the probability of switching from state $i$ to state $j$ (one period)
+
+\item $P^2$ characterizes transitions over two periods: $(P^2)_{ij}$ is prob of going from $i$ to $j$ in two periods
+
+\item The rows of the transition matrix have to sum to $1$ (definition of probability measure)
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{3. Difference equations}
+\begin{witemize}
+\item We start with deterministic (non-random) dynamics and then conclude with stochastic (random) dynamics
+
+\item The \textit{first-order linear difference equation} is defined by
+\begin{equation}\label{eq:linear_difference}
+	x_{t+1} = b x_t + c z_t 
+\end{equation}
+where $\{z_t\}$ is an exogenously given, bounded sequence
+
+\item For now, all objects are (real) scalars (easy to extend to vectors and matrices)
+
+\item Suppose we have an \textit{initial condition} (i.e., given initial value) $x_0$
+
+\item When $c = 0$, \eqref{eq:linear_difference} is a \textit{time-homogeneous} difference equation
+
+\item When $cz_t$ is constant for all $t$, \eqref{eq:linear_difference} is an \textit{autonomous} difference equation
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Autonomous equations}
+\begin{witemize}
+\item Consider the autonomous equation with $z_t = 1$ 
+
+\item A particular solution is the constant solution with $x_t = \frac{c}{1-b}$ when $b \neq 1$
+
+\item Such a point is called a \textit{stationary point} or \textit{steady state}
+
+\item General solution of the autonomous equation (for some constant $x$):
+\begin{equation}\label{eq:linear_difference_solution}
+	x_t = (x_0 - x) b^t + x
+\end{equation}
+
+\item Important question is long-run behavior (stability / convergence)
+
+\item When $| b | < 1$, \eqref{eq:linear_difference_solution} converges asymptotically to steady state $x$ for any initial value $x_0$ (steady state $x$ is globally stable) 
+
+\item If $| b | > 1$, \eqref{eq:linear_difference_solution} explodes and is not stable (except when $x_0 = x$)
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Examples in macro}
+
+\textbf{Capital accumulation}:
+\begin{equation*}
+	K_{t+1} = (1 - \delta) K_t + I_t
+\end{equation*}
+\begin{witemize}
+\item $\delta$ is depreciation and $I_t$ is investment
+
+\item This is a \textit{forward equation} and requires an initial condition $K_0$
+
+\item If $I_t = 0$ and $0 < \delta < 1$, $K_t \to 0$
+
+\item If $I_t = c$ constant, then $K_t$ converges to $\frac{c}{\delta}$: $K_{t+1} = (1-\delta) \frac{c}{\delta} + c = \frac{c}{\delta}$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\textbf{Wealth dynamics}:
+\begin{equation*}
+	a_{t+1} = R_t a_t + y_t - c_t
+\end{equation*}
+\begin{witemize}
+	\item $R_t$ is the gross real interest rate, $y_t$ is income, $c_t$ is consumption
+	
+	\item This is a \textit{forward equation} and requires an initial condition $a_0$
+	
+	\item We will study this as a \textit{controlled} process because $c_t$ will be chosen optimally
+	
+	\item Work out the following: $R_t = R$ and $y_t = y$ constant, and  
+	\begin{equation*}
+		c_t = \bigg( 1 - \frac{1}{R} \bigg) \bigg(a_t + \sum_{s=t}^\infty R^{-(s-t)} y \bigg)
+	\end{equation*}
+	What are the dynamics of $a_t$?
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\textbf{Consumption Euler equation}:
+\begin{equation*}
+	\frac{1}{C_t} = \beta R_t\frac{1}{C_{t+1}}
+\end{equation*}
+\begin{witemize}
+	\item $\frac{1}{C_t} = u'(C_t)$ is marginal utility with log preferences
+	
+	\item This is a \textit{backward equation} and requires a terminal condition or transversality condition, i.e., $c_T$ must converge to something
+	
+	\item Suppose there exists time $T$ s.t. for all $t \geq T$, $C_t = C$
+	
+	\item Then solve \textit{backwards} from: $\frac{1}{C_{T-1}} = \beta R_{T-1} \frac{1}{C_T}$ or expressed as \textit{time-homogeneous first-order linear difference equation}
+	\begin{equation*}
+		C_{T-1} = \frac{1}{\beta R_{T-1}} C_T
+	\end{equation*}
+
+	\item Difference between \textit{forward} and \textit{backward} equations is critical! This is closely related to the idea of \textit{boundary conditions} (much more to come)
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{4. Stochastic difference equations}
+\begin{witemize}
+\item Consider the process $\{X_t\}$ with 
+\begin{equation}\label{eq:stochastic_difference}
+	X_{t+1} = A X_t + Cw_{t+1}
+\end{equation}
+where $w_{t+1}$ is an iid. process with $w_{t+1} \sim \mathcal N(0, 1)$
+
+\item Equation \eqref{eq:stochastic_difference} is a \textit{first-order, linear stochastic difference equation}
+
+\item Let $\mathbb E_t$ the \textit{conditional expectation} operator (conditional on time $t$ information)
+
+\item For example:
+\begin{align*}
+	\mathbb E_t(X_{t+1}) &= \mathbb E(X_{t+1} \mid X_t) = \mathbb E(A X_t + Cw_{t+1} \mid X_t) \\
+	&= A X_t + C \mathbb E(w_{t+1} \mid X_t) = A X_t + C \mathbb E(w_{t+1}) = A X_t
+\end{align*}
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Rational expectations: agents' beliefs about stochastic processes are consistent with the true distribution of the process
+
+\item Key equation: wealth dynamics with income fluctuations:
+\begin{equation*}
+	a_{t+1} = R_t a_t + y_t - c_t,
+\end{equation*}
+where $y_t$ is a stochastic process
+
+\item Consumption Euler equation with uncertainty (e.g., stochastic income):
+\begin{equation*}
+	u'(C_t) = \beta R \mathbb E_t \Big[ u'(C_{t+1}) \Big]
+\end{equation*}
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{transitionframe}
+	{\color{white} \huge \textbf{Part 2: stochastic dynamic programming} \vspace{2mm}}
+\end{transitionframe}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{1. Stochastic dynamic programming}
+\begin{witemize}
+\item Follow Ljungqvist-Sargent notation, Chapter 3.2 
+
+\item Under uncertainty, household problem takes the form 
+\begin{equation*}
+	\max_{ \{c_t\} } \mathbb E_0 \sum_{t=0}^\infty \beta^t u(c_t)
+\end{equation*}
+subject to $k_{t+1} = g(k_t, c_t, \epsilon_{t+1})$ \hspace{1mm} (\textit{first-order stochastic difference equation})
+
+\item $\{\epsilon_t\}_{t=0}^\infty$ is sequence of iid random variables (\textit{stochastic process})
+
+\item Initial condition $x_0$ given
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Dynamic programming approach: we again look for recursive representation on state space $k_t \in \mathcal X$
+
+\item The problem is to look for a \textit{policy function} $c(k)$ that solves 
+\begin{equation*}
+	V(k) = \max_{c} \bigg\{ u(c) + \beta \mathbb E \bigg[ V\Big( g(k, c, \epsilon) \Big) \, \Big| \, k \bigg] \bigg\}
+\end{equation*}
+where $\mathbb E[V(\cdot) \mid k] = \int V(\cdot) dF(\epsilon)$
+
+\item $V(k)$ is the (lifetime) value that an agent obtains from solving this problem starting from $k$
+
+\item FOC that characterizes the consumption policy function $c(k)$ is 
+\begin{equation*}
+	0 = u'(c(k)) + \beta \mathbb E \Big\{ \partial_k V \Big( g(k, c(k), \epsilon) \Big) \cdot \partial_c g(k, c(k), \epsilon) \, \Big| \, k \Big\} = 0
+\end{equation*}
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2. History notation}
+\begin{witemize}
+\item A very popular approach to deal with uncertainty in macro is to use history notation (Ljungqvist-Sarget, e.g., chapters 8, 12)
+
+\item Economy populated by individuals, indexed by $i \in I$
+
+\item Time is discrete and indexed by $t = 0, 1, \ldots$
+
+\item At every $t$, there is a realization of a stochastic event $s_t \in \mathcal S$
+
+\item We denote the \textbf{history} of such events up to $t$ by $s^t = \{s_0, s_1, \ldots, s_t\}$
+
+\item The unconditional probability of history $s^t$ is given by $\pi_t(s^t \mid s_0)$
+
+\item If Markov, $\pi_t \Big( s^t \, | \, s_0 \Big) = \pi(s_t \mid s_{t-1}) \pi(s_{t-1} \mid s_{t-2}) \ldots \pi(s_0)$
+
+\item Single consumption good (dollars) as numeraire
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{itemize}
+\item The \textbf{lifetime value} of individual $i$ is then defined as 
+\begin{align*}
+	V_i(s_0) = \sum_{t=0}^T \Big( \beta_i \Big)^t \sum_{s^t} \pi_t \Big( s^t \mid s_0 \Big) u_i \Big( c_t^i \Big( s^t \Big), n_t^i \Big(s^t \Big) \Big)
+\end{align*}
+
+\item \textit{Generalizations}: heterogeneous beliefs, general preferences (Epstein-Zin), recursive formulation, multiple commodities, intergenerational considerations
+
+\item Suppose $c_t^i(\cdot)$ and $l_t^i(\cdot)$ are functions of some primitive (policy) $\theta$
+
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{itemize}
+\item Consider policy experiment $d \theta$, then $i$'s \textbf{private welfare assessment} is
+\begin{align*}
+	\frac{ d V_i(s_0) }{d \theta} = \sum_{t=0}^T \Big( \beta_i \Big)^t \sum_{s^t} \pi_t \Big( s^t \mid s_0 \Big)  \frac{\partial u_i (s^t)}{\partial c_t^i}  {\color{myorange} \frac{ d u_{i \mid c} (s^t)}{d \theta}}
+\end{align*}
+
+\vspace{4mm}
+{\color{myorange} Instantaneous consumption-equivalent effect} of policy $d \theta$ at date ${\color{myorange} t}$, history ${\color{myorange} s^t}$ on individual ${\color{myorange} i}$:
+\vspace*{0mm}
+\begin{align*}
+	{\color{myorange} \frac{ d u_{i \mid c} (s^t)}{d \theta}} \equiv \frac{ \frac{d u_i (c_t^i(s^t), n_t^i(s^t))}{d \theta} }{ \frac{\partial u_i (s^t)}{\partial c_t^i}}  = \underbrace{ \frac{d c_t^i (s^t)}{d \theta} + \frac{ \frac{\partial u_i (s^t)}{\partial n_t^i} }{ \frac{\partial u_i (s^t)}{\partial c_t^i}}  \frac{d n_t^i (s^t)}{d \theta} }_\text{in {\color{myorange} \textit{consumption} units}}
+\end{align*}
+
+\item Example: $d \theta$ gives $i$ marginal dollar at $s^t$, then
+\begin{equation*}
+	\frac{dV_i(s_0)}{d \theta} = (\beta_i)^t \pi_t(s^t \mid s_0) \frac{\partial u_i(s^t)}{\partial c_t^i}
+\end{equation*}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\vspace{4mm}
+{\color{myblue} \textbf{Conventional benchmarks}}:
+\begin{itemize}
+	{\small
+		
+		\vspace{2mm}
+		\item Policy $d \theta$ is {\color{myorange} Pareto improving} if $\frac{ d V_i(s_0) }{d \theta} \geq 0$ for all $i$, strictly for some $i$
+		
+		\vspace{0mm}
+		\item {\color{myorange}Welfarist planners}: \hspace{0.5mm} SWF given by \hspace{0.2mm} $\mathcal{W}\left(\left\{ V_{i}\left(s_{0}\right)\right\} _{i\in I}\right)$
+		
+		\vspace{0.5mm}
+		{\footnotesize \textit{Utilitarian, Isoelastic, Rawlsian, Nash, Dictator, ...}}
+		
+		\vspace{0mm}
+		\item Policy $d \theta$ is desirable for a {\color{myorange} welfarist planner} if
+		\vspace*{-1mm}
+		\begin{equation*}
+			\int \lambda_{i}\left(s_{0}\right) \frac{ d V_i(s_0) }{d \theta} d i > 0 \, , \hspace{10mm}  \text{where} \hspace{2mm} \lambda_{i}\left(s_{0}\right)=\frac{\partial\mathcal{W}\left(\left\{ V_{i}\left(s_{0}\right)\right\} _{i\in I}\right)}{\partial V_{i}}
+		\end{equation*}
+		}
+\end{itemize}
+
+\vspace{6mm}
+{\color{navyblue} \textbf{Remarks}}:
+{\small
+\begin{itemize}
+\item All welfarist planners agree when individuals ex-ante ($s_0$) homogeneous
+
+\vspace{-1mm}
+\item How to make welfare assessments with \textit{heterogeneous} individuals?
+
+\vspace{-1mm}
+\item If you're interested, see D\'avila-Schaab (2022)
+\end{itemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{3. Stochastic Growth Model}
+\begin{witemize}
+\item Discrete time: $t \in \{0, 1, \ldots, T\}$, where $T \leq \infty$
+
+\item At $t$, event $s_t \in \mathcal{S}$ is realized; history $s^t = (s_0, \ldots, s_t)$ has probability $\pi_t(s^t)$
+
+\item Representative household has preferences of paths of consumption $c_t(s^t)$ and labor $l_t(s^t)$ 
+\begin{equation*}
+	\sum_{t=0}^\infty \beta^t \sum_{s^t} \pi_t\Big(s^t \Big) u \Big( c_t(s^t), l_t(s^t) \Big)
+\end{equation*}
+
+\item Inada conditions $\lim_{c\to 0} u_c(c, l) = \lim_{l\to0} u_l (c, l) = \infty$
+
+\item At $t=0$, household endowed with $k_0$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Technology, capital accumulation, and budget / resource constraint:
+\begin{align*}
+	c_t(s^t) + \iota_t(s^t) &\leq A_t(s^t) F(k_t(s^{t-1}), l_t(s^t)) \\
+	k_{t+1}(s^t) &= (1-\delta) k_t(s^{t-1}) + \iota_t(s^t)
+\end{align*}
+
+\item $F(\cdot)$ is twice continuously differentiable and constant returns to scale
+
+\item Source of uncertainty is stochastic process for TFP $A_t(s^t)$
+
+\item Standard regularity conditions on $F(\cdot)$ (see LS)
+\end{witemize}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Lagrangian approach to sequence problem}
+\begin{witemize}
+\item Form Lagrangian 
+\begin{align*}
+	L = &\sum_{t=0}^\infty \sum_{s^t} \beta^t \pi_t(s^t) \bigg\{ u (c_t(s^t), l_t(s^t)) \\
+	&+ \lambda_t(s^t) \bigg[ A_t(s^t) F(k_t(s^{t-1}), l_t(s^t)) - c_t(s^t) + (1-\delta) k_t(s^{t-1})  - k_{t+1}(s^t) \bigg] \bigg\}
+\end{align*}
+
+\item FOCs for $c_t(s^t)$, $l_t(s^t)$ and $k_{t+1}(s^t)$ are given by
+\begin{align*}
+	u_c(s^t) &= \lambda_t(s^t) \\
+	u_l(s^t) &= u_c(s^t) A_t(s^t) F_n(s^t) \\
+	u_c(s^t) \pi_t(s^t) &= \beta \sum_{s^{t+1} \mid s^t} u_c(s^{t+1}) \pi_{t+1}(s^{t+1}) \bigg[ A_{t+1} (s^{t+1}) F_k (s^{t+1}) + (1-\delta) \bigg]
+\end{align*}
+
+\item Summation over $(s^{t+1} \mid s^t)$ is like conditional expectation (summing over histories that branch out from $s^t$)
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Recursive representation: dynamic programming}
+\begin{witemize}
+\item Assume time-homogeneous Markov process:
+\begin{equation*}
+	\mathbb E_t (A_{t+1}) = \mathbb E \Big[ A(s^{t+1}) \mid s^t \Big] = \mathbb E \Big[ A(s_{t+1}) \mid s_t \Big] = \sum_{s'} \pi(s' \mid s_t) A(s')
+\end{equation*}
+
+\item Drop $t$ subscripts: $s$ is current state, $s'$ denotes next period's draw
+
+\item Denote by $X_t$ the \textit{endogenous state} of the problem: for now, assume there is such a representation 
+
+\item Intuitively: $s$ is the exogenous state and $X$ is the endogenous state 
+
+\item Bellman equation can be written: 
+\begin{equation*}
+	V(X, s) = \max_{c, l} \bigg\{ u(c, l) + \beta \sum_{s'} \pi(s' \mid s) V(X', s') \bigg\}
+\end{equation*}
+subject to $X' = g(X, c, l, s, s')$
+\end{witemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{4. Application: optimal stopping problem}
+
+\vspace{5mm}
+\textbf{Problem}: Every period $t$, an agent draws an offer $x$ from the unit interval $[0, 1]$. The agent can accept the offer, in which case her payoff is $x$, and the game ends. Draws are independent. The agent discounts the future at $\beta$. The game continues until the agent receives an offer she accepts.
+
+\vspace{5mm}
+\begin{itemize}
+\item Agent's dynamic optimization problem given recursively by Bellman equation 
+\begin{equation*}
+	V(x) = \max \Big\{ x, \, \beta \mathbb{E} V(x') \Big\}
+\end{equation*}
+where the expectation (operator) $\mathbb{E}$ is taken over the next draw $x'$
+
+\item There will be a threshold $x^* \in [0, 1]$ such that agent accepts for $x \geq x^*$
+
+\item This is also called a \textbf{free boundary problem} because we have to look for the endogenous boundary of the problem $x^*$
+
+\item Many applications (problems in life) look like this: 
+
+buying a house, searching for a partner, closing a production plant, exercising an option, adopting a new technology, ... 
+
+\end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\begin{itemize}
+\item The value function will look like:
+\begin{equation*}
+	V(x) = \begin{cases} x & \text{ if } \;\; x \geq x^* \\
+		x^* & \text{ if } \;\; x < x^* 
+		\end{cases}
+\end{equation*}
+
+\item Find the value $x^*$ such that this function satisfies the Bellman equation
+
+\item At $x = x^*$, indifferent between accepting and stopping:
+\begin{align*}
+	V(x^*) &= x^* \\
+	&= \beta \mathbb{E} V(x') \\
+	&= \beta \int_0^{x^*} x^* f(x) dx + \beta \int_{x^*}^1 x f(x) dx \\
+	&= \beta x^*  [x]_0^{x^*} + \beta \frac{1}{2} [x^2]_{x^*}^1
+\end{align*}
+where $f(x) = \frac{1}{1 - 0}$ is the uniform density
+
+\item Solution: $x^* = \beta (x^*)^2 + \beta \frac{1}{2} [1 - (x^*)^2]$ or $x^* = \frac{1}{\beta} (1 - \sqrt{1 - \beta^2})$
+
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{transitionframe}
+	{\color{white} \Huge \textbf{Part 1: deterministic dynamics} \vspace{2mm}}
+\end{transitionframe}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{1. Neoclassical growth model in continuous time}
+\begin{wideitemize}
+\item The lifetime value of the representative household is
+\begin{equation*}
+	v(k_0) = \max_{\{ c_t \}_{t \geq 0} } \int_0^\infty e^{-\rho t} u(c_t) dt
+\end{equation*}
+subject to
+\begin{align*}
+	\dot k_t &= F(k_t) - \delta k_t - c_t \\
+	k_0 &\text{ given },
+\end{align*}
+where $\dot x_t = \frac{d}{dt} x_t$, $\rho$ is the discount rate, $c_t$ is the rate of consumption, $u(\cdot)$ is instantaneous utility flow, and $\dot k_t$ is the rate of (net) capital accumulation
+
+\item No uncertainty for now
+
+\item This is the \textbf{sequence problem} in continuous time
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2. Calculus of variations [\textit{skip}]}
+\begin{wideitemize}
+\item Resources:
+\begin{itemize}
+	\item LeVeque: Finite Difference Methods for Ordinary and Partial Differential Equations
+	
+	\item Kamien and Schwartz: Dynamic Optimization
+	
+	\item Gelfand and Fomin: Calculus of Variations
+\end{itemize}
+
+\item This dynamic optimization problem is associated with the Lagrangian
+\begin{equation*}
+	L = \int_0^\infty e^{-\rho t} \bigg[ u(c_t) + \mu_t \bigg( F(k_t) - \delta k_t - c_t - \dot k_t \bigg) \bigg] dt 
+\end{equation*}
+
+\item $\mu_t$ is the Lagrange multiplier on the capital accumulation ODE
+
+\item What do we do with $\dot k_t$??
+
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}		
+\item Integrate by parts:
+\begin{align*}
+	\int_0^\infty e^{-\rho t} \mu_t \dot k_t dt &= e^{-\rho t} \mu_t k_t \Big|_0^\infty - \int_0^\infty \frac{d}{dt} \bigg( e^{-\rho t} \mu_t \bigg) k_t dt \\
+	&= - \mu_0 k_0 + \int_0^\infty e^{-\rho t} \rho \mu_t k_t dt - \int_0^\infty e^{-\rho t} \dot \mu_t k_t dt
+\end{align*}
+
+\item Plugging into Lagrangian: 
+\begin{equation*}
+	L = \int_0^\infty e^{-\rho t} \bigg[ u(c_t) + \mu_t \bigg( F(k_t) - \delta k_t - c_t \bigg) - \rho \mu_t k_t + \dot \mu_t k_t \bigg] dt + \mu_0 k_0
+\end{equation*}
+
+\item What have we accomplished? 
+
+\item Notice $\mu_0 k_0$, this is crucial. What's intuition? 
+
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{equation*}
+L = \int_0^\infty e^{-\rho t} \bigg[ u(c_t) + \mu_t \bigg( F(k_t) - \delta k_t - c_t \bigg) - \rho \mu_t k_t + \dot \mu_t k_t \bigg] dt + \mu_0 k_0
+\end{equation*}
+
+\begin{wideitemize}
+\item The planner optimizes over paths $\{ c_t \}$ and $\{ k_t \}$
+
+\item At an optimum, there cannot be \textit{any} small perturbation in these paths that the planner finds preferable
+
+\item Let $\{ c_t \}$ and $\{ k_t \}$ be \textit{candidate} optimal paths. Consider $\hat c_t = c_t + \alpha h_t^c$ and $\hat k_t = k_t + \alpha h_t^k$ for arbitrary functions $h_t^c$ and $h_t^k$
+\end{wideitemize}
+
+
+\vspace{-2mm}
+\begin{align*}
+L(\alpha) = \int_0^\infty e^{-\rho t} \bigg[ &u(c_t + \alpha h_t^c) + \mu_t \bigg( F(k_t + \alpha h_t^k) - \delta k_t - \delta \alpha h_t^k - c_t - \alpha h_t^c \bigg) \\
+&- \rho \mu_t (k_t + \alpha h_t^k) + \dot \mu_t (k_t + \alpha h_t^k) \bigg] dt + \mu_0 (k_0 + \alpha h_0^k)
+\end{align*}
+
+\vspace{-2mm}
+\begin{wideitemize}
+\item What about \textit{boundary conditions}? At $t=0$, capital stock is fixed ($k_0$ given) while consumption is free. So must have: $h_0^k = 0$ while $h_0^c$ is free
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+Necessary condition for optimality: $\frac{d}{d \alpha} L(0) = 0$
+\begin{align*}
+L(\alpha) = \int_0^\infty e^{-\rho t} \bigg[ &u(c_t + \alpha h_t^c) + \mu_t \bigg( F(k_t + \alpha h_t^k) - \delta k_t - \delta \alpha h_t^k - c_t - \alpha h_t^c \bigg) \\
+&- \rho \mu_t (k_t + \alpha h_t^k) + \dot \mu_t (k_t + \alpha h_t^k) \bigg] dt + \mu_0 (k_0 + \alpha h_0^k)
+\end{align*}
+
+Work this out yourselves (many times, in many applications!)
+\begin{align*}
+\frac{d}{d \alpha}L(0) = \int_0^\infty e^{-\rho t} \bigg[ &u'(c_t) h_t^c + \mu_t \bigg( F'(k_t) h_t^k  - \delta h_t^k - h_t^c \bigg) \\
+&- \rho \mu_t h_t^k + \dot \mu_t h_t^k \bigg] dt + \mu_0 h_0^k
+\end{align*}
+where $h_0^k = 0$ because $k_0$ is fixed
+
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+Group terms: 
+\begin{align*}
+\frac{d}{d \alpha}L(0) = \int_0^\infty e^{-\rho t} \bigg[ &\bigg( u'(c_t) - \mu_t \bigg) h_t^c + \bigg( \mu_t \Big( F'(k_t) - \delta \Big) - \rho \mu_t + \dot \mu_t \bigg) h_t^k \bigg] dt 
+\end{align*}
+
+\vspace{5mm}
+\textbf{Fundamental Theorem of the Calculus of Variations}: Since $h_t^c$ and $h_t^k$ were arbitrary, we must have \textit{pointwise}
+\begin{align*}
+0 &= u'(c_t) - \mu_t \\
+0 &= \mu_t \Big( F'(k_t) - \delta \Big) - \rho \mu_t + \dot \mu_t
+\end{align*}
+
+\vspace{5mm}
+\textbf{Proposition.} (Euler equation for marginal utility) 
+\begin{equation*}
+\frac{\dot \mu_t}{\mu_t} = \frac{\dot u_{c, t}}{u_{c, t}} = \rho -  F'(k_t) + \delta = \rho - r_t 
+\end{equation*}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\begin{wideitemize}
+\item We have now solved the neoclassical growth model in continuous time. Its solution is given by a system of two ODEs. 
+
+\item Suppose $u(c) = \log(c)$ and $F(k) = k^\alpha$, then:
+\begin{align*}
+	\frac{\dot c_t}{c_t} &= \alpha k_t^{\alpha - 1} - \delta - \rho \\
+	\dot k_t &= k_t^\alpha - \delta k_t - c_t
+\end{align*}
+with $k_0$ given
+
+\item Derive the consumption Euler equation yourselves!
+
+\item What are the boundary conditions? (Always ask about BCs!) 
+\begin{itemize}
+	\item Initial condition on capital: $k_0$ given
+	\item Terminal condition on consumption : $\lim_{T \to \infty} c_T = c_\text{ss}$ 
+\end{itemize}
+
+\end{wideitemize}
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{3. Optimal control theory}
+\begin{wideitemize}
+\item Optimal control theory emerged from the calculus of variations
+
+\item Applies to dynamic optimization problems in continuous time that feature (ordinary) differential equations as constraints
+
+\item Again the neoclassical growth model:
+\begin{equation*}
+	v(k_0) = \max_{\{ c_t \}_{t \geq 0} } \int_0^\infty e^{-\rho t} u(c_t) dt
+\end{equation*}
+subject to
+\begin{align*}
+	\dot k_t &= F(k_t) - \delta k_t - c_t,  \quad k_0 \text{ given}
+\end{align*}
+
+\item Three new terms: 
+\begin{itemize}
+	\item \textbf{State variable}: $k_t$
+	
+	\item \textbf{Control variable}: $c_t$
+	
+	\item \textbf{Hamiltonian}: $H(c_t, k_t, \mu_t) = u(c_t) + \mu_t \big[ F(k_t) - \delta k_t - c_t \big]$
+\end{itemize}
+\end{wideitemize}	
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+\item With Hamiltonian in hand, \textit{copy-paste} formula that we can always use:
+
+\begin{itemize}
+\item \textbf{Optimality condition}: $\frac{\partial}{\partial c} H = 0$
+\item \textbf{Multiplier condition}: $\rho \mu_t - \dot \mu_t = \frac{\partial}{\partial k} H$
+\item \textbf{State condition}: $\dot k_t = \frac{\partial}{\partial \mu} H$
+\end{itemize}
+
+\item This gives us the same equations that we derived using calc of variations:
+\begin{align*}
+	u'(c_t) &= \mu_t \\
+	\rho \mu_t - \dot \mu_t &= \mu_t (F'(k_t) - \delta) \\
+	\dot k_t &= F(k_t) - \delta k_t - c_t
+\end{align*}
+
+\item We again get system of Euler equation and capital accumulation:
+\begin{align*}
+	\dot c_t &= \frac{u'(c_t)}{u''(c_t)} \Big( \rho - F'(k_t) + \delta \Big) \\
+	\dot k_t &= F(k_t) - \delta k_t - c_t
+\end{align*}
+
+\end{wideitemize}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{4. Simple example [\textit{skip}]}
+\begin{wideitemize}
+
+\item Credit: Kamien-Schwartz p. 129
+
+\item Simple problem: not much intuition, but illustrates mechanics
+\begin{equation*}
+	\max \int_0^1 (x + u) dt 
+\end{equation*}
+subject to $\dot x = 1 - u^2$ and initial condition $x_0 = 1$
+
+\item Step 1: form Hamiltonian $H(t, x, u, \lambda) = x + u + \lambda (1 - u^2)$
+
+\item Step 2: necessary conditions (note: no discounting here)
+\begin{align*}
+	0 &= H_u = 1 - 2 \lambda u \\
+	- \dot \lambda &= H_x = 1
+\end{align*}
+and terminal condition $\lambda_1 = 0$ (because $u_1$ is \textit{free})
+
+\end{wideitemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+
+\item Step 3: manipulate necessary conditions:
+\begin{align*}
+	\lambda &= 1 - t \\
+	u &= \frac{1}{2 \lambda}
+\end{align*}
+and therefore: $u = \frac{1}{2} (1 - t)$
+
+\item Finally: solve for all paths (control, state, multiplier)
+\begin{align*}
+	x_t &= t - \frac{1}{4} (1 - t) + \frac{5}{4} \\
+	\lambda_t &= 1 - t \\
+	u_t &= \frac{1}{2} (1 - t)
+\end{align*}
+
+\end{wideitemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5. Hamilton-Jacobi-Bellman equation}
+\begin{wideitemize}
+\item Recall the neoclassical growth model in continuous time
+\begin{equation*}
+	v(k_0) = \max_{\{ c_t \}_{t \geq 0} } \int_0^\infty e^{-\rho t} u(c_t) dt
+\end{equation*}
+subject to
+\begin{align*}
+	\dot k_t &= F(k_t) - \delta k_t - c_t \\
+	k_0 &\text{ given },
+\end{align*}
+where $\dot x_t = \frac{d}{dt} x_t$, $\rho$ is the discount rate, $c_t$ is the rate of consumption, $u(\cdot)$ is instantaneous utility flow, and $\dot k_t$ is the rate of (net) capital accumulation
+
+\item No uncertainty for now %: $\{ r_t, y_t \}_{t \geq 0}$ are deterministic processes
+
+\item This is the infinite-horizon sequence problem, $t \in [0, \infty)$
+
+\item A function $v(\cdot)$ that solves this problem is a solution to the neoclassical growth model 
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+\item We will now work towards a recursive representation (good reference: Stokey textbook)
+
+\item The discrete-time Bellman equation would be
+\begin{equation*}
+	v(k_t) = \max_c \Big\{ u(c) \Delta t + \frac{1}{1 + \rho \Delta t} v(k_{t+\Delta}) \Big\}
+\end{equation*}
+where $\beta = \frac{1}{1+ \rho \Delta t}$
+
+\item Next: multiply by $1 + \rho \Delta t$ and note that $(\Delta t)^2 \approx 0$
+\begin{align*}
+	(1 + \rho \Delta t) v(k_t) &= \max_c \Big\{ (1 + \rho \Delta t) u(c) \Delta t + v(k_{t+\Delta}) \Big\} \\
+	\rho \Delta t v(k_t) &= \max_c \Big\{ u(c) \Delta t + v(k_{t+\Delta}) - v(k_t) \Big\} \\
+	\rho v(k_t) &= \max_c \Big\{ u(c) + \frac{v(k_{t+\Delta}) - v(k_t)}{\Delta t} \Big\}
+\end{align*}
+
+\item Finally: take limit $\Delta t \to 0$ and drop $t$ subscripts
+\begin{equation*}
+	\rho v(k) = \max_c \Big\{ u(c) + dv \Big\}
+\end{equation*}
+\end{wideitemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+\item We want to express $dv$ in terms of $v'(\cdot)$ and $dk$
+
+\item Different ways to think about this: chain rule, Ito's lemma (though no uncertainty here), generator
+
+\item Recall generator of (stochastic) process $dk_t$: For any $f(\cdot)$
+\begin{equation*}
+	\mathcal A f(k_t) = \lim_{\Delta t \to 0} \mathbb{E}_t \frac{ f(k_{t + \Delta t}) - f(k_t) }{\Delta t}
+\end{equation*}
+
+\item For simple ODE (no uncertainty) $dk = (F(k) - \delta k - c) dt$, we have
+\begin{equation*}
+	\mathcal A f(k) = (F(k) - \delta k - c) f'(k)
+\end{equation*}
+
+\item Therefore, we arrive at the \textbf{Hamilton-Jacobi-Bellman equation}:
+\begin{equation*}
+	\rho v(k) = \max_c \Big\{ u(c) + \Big( F(k) - \delta k - c \Big) v'(k) \Big\}
+\end{equation*}
+
+\item Notice: We conjectured a stationary value function (what does this mean?)
+\end{wideitemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{6. First-order condition for consumption}
+\begin{itemize}
+\item HJB still has ``max'' operator:
+\begin{equation*}
+	\rho v(k) = \max_c \Big\{ u(c) + \Big( F(k) - \delta k - c \Big) v'(k) \Big\}
+\end{equation*}
+
+\item To get rid of this, we have to resolve optimal consumption choice
+
+\item First-order condition:
+\begin{equation*}
+	u'(c(k)) = v'(k)
+\end{equation*}
+
+\item This defines the \textbf{consumption policy function}
+
+\item We can now plug back in, obtaining an ODE in $v'(k)$
+\begin{equation*}
+	\rho v(k) = u(c(k)) + \Big( F(k) - \delta k - c(k) \Big) v'(k)
+\end{equation*}
+
+\item Why is this a “stationary” value function and ODE? What would a time-dependent ODE look like? When would we get one?
+\end{itemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{7. Envelope condition and Euler equation}
+
+{\small
+\begin{itemize}
+\item We now derive the Euler equation in continuous time
+
+\item We start with the \textbf{HJB envelope condition}. Differentiating in $k$:
+\begin{align*}
+	\rho v'(k) &= u'(c(k)) c'(k) + \Big( F'(k) - \delta - c'(k) \Big) v'(k) + \Big( F(k) - \delta k - c(k) \Big) v''(k) \\
+	\rho v'(k) &= \Big( \underbrace{ F'(k) - \delta}_\text{interest rate $r$} \Big) v'(k) + \Big( F(k) - \delta k - c(k) \Big) v''(k) \\
+	(\rho - r) v'(k) &= \Big( F(k) - \delta k - c(k) \Big) v''(k)
+\end{align*}
+
+\item Next, we characterize \textit{process} $d v'(k)$. Using Ito's lemma (even though no uncertainty):
+\begin{align*}
+	d v'(k) &= v''(k) dk \\
+	&= v''(k) (F(k) - \delta k - c(k)) dt \\
+	&= (\rho - r) v'(k) dt.
+\end{align*}
+\end{itemize}
+}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+{\small
+\begin{itemize}
+\item Recall first-order condition $u'(c(k)) = v'(k)$.
+
+\item The \textbf{Euler equation for marginal utility }is given by
+\begin{equation*}
+	\frac{d u'(c)}{u'(c)} = (\rho - r) dt.
+\end{equation*}
+
+\item To go from marginal utility to consumption, we use CRRA utility: $u(c) = \frac{1}{1-\gamma} c^{1-\gamma}$. $u'(c) = c^{-\gamma}$ is a function of \textit{process} $c$, so by Ito's lemma: 
+\begin{align*}
+	d u'(c) &= -\gamma c^{-\gamma - 1} dc \\
+	&= -\gamma u'(c) \frac{dc}{c} 
+\end{align*}
+
+\item Plugging in yields \textbf{Euler equation for consumption} in continuous time:
+\begin{equation*}
+	\frac{dc}{c} = \frac{r - \rho}{\gamma} dt
+\end{equation*}
+or (you'll often see this notation when no uncertainty): $\frac{\dot c}{c} = \frac{r - \rho}{\gamma}$
+\end{itemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+Connection between calculus of variations and HJB:
+\begin{wideitemize}
+\item What is the connection between costate / multiplier $\mu_t$ and marginal value of wealth $V'(k)$?
+
+\item What is the connection between multiplier equation and envelope condition?
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{9. Boundary conditions}
+
+{\small
+\begin{itemize}
+\item This is really important: everything we have done so far is only valid in the \textbf{interior of the state space}
+
+\item What's the state space of a model? 
+
+\item For the neoclassical growth model without uncertainty, state space is $k \in [0, \infty)$, or 
+\begin{equation*}
+	\mathcal X = \Big\{ k \mid k \in [0, \bar k] \Big\}
+\end{equation*}
+where we impose an upper boundary $\bar k$ 
+
+\item This is like the domain of the function $v(k)$ that will be valid 
+
+\item We say $\partial \mathcal X = \{ 0, \bar k \}$ is the \textbf{boundary} of the state space and $\mathcal X \backslash \partial \mathcal X = (0, \bar k)$ is the \textbf{interior}
+
+\item As is the case \textbf{for all differential equations}, the HJB holds on the interior and we need \textbf{boundary conditions} to characterize $v(k)$ along the boundary 
+\end{itemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+{\small
+\begin{wideitemize}
+\item What kind of differential equation is the HJB in this model?
+
+\item So how many boundary conditions do we need?
+
+\item In terms of the economics, what is the correct boundary condition? I.e., what is the correct economic behavior at the boundary $k \in \{0, \bar k\}$? 
+
+\item Nice intuition: 2 boundary inequalities do same job as 1 boundary equality
+
+\item We want households to not leave the state space, so we impose that they do not dissave / borrow as $k \to 0$ and save as $k \to \bar k$
+
+\item This implies: (why?)
+\begin{align*}
+	u'(c(0)) &\geq v'(0) \\
+	u'(c(\bar k)) &\leq v'(\bar k)
+\end{align*}
+
+\item  If households ever hit the boundaries (in the neoclassical growth model, this doesn't really happen), then consumption behavior is no longer determined by the Euler equations but rather by the boundary conditions 
+
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{transitionframe}
+	{\color{white} \Huge \textbf{Part 2: stochastic dynamics} \vspace{2mm}}
+\end{transitionframe}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{1. The generator of a stochastic process}
+
+{\small
+\begin{wideitemize}
+\item We start with the diffusion process
+\begin{equation*}
+	dX = \mu(t, X) dt + \sigma (t, X) dB
+\end{equation*}
+where $dB$ is a standard Brownian motion
+
+\item The generator $\mathcal A$ tells us how the stochastic process is \textit{expected} to evolve
+
+\item The generator $\mathcal A$ is a functional operator
+
+\item Formally, for $f(t, X)$, we have 
+\begin{equation*}
+	\mathcal A f = \lim_{\Delta t \to 0} \mathbb E_t \frac{ f(t + \Delta t, X(t + \Delta t)) - f(t, X(t)) }{\Delta t}
+\end{equation*}
+
+\item We will now show that:
+\begin{equation*}
+	\mathcal A f = \partial_t f(t, X) + \mu(t, X) \partial_X f(t, X) + \frac{1}{2} \sigma(t, X)^2 \partial_{XX} f(t, X)
+\end{equation*}
+
+\item For the general / multi-dimensional version see Oksendal
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+\item Next, we consider the poisson process $\{ Y_t \}$ where $Y_t \in \{ Y^1, Y^2 \}$. This is a two-state Markov chain in continuous time.
+
+\item We assume that the Poisson intensity / arrival rate / hazard rate is $\lambda$
+
+\item The generator is now given by
+\begin{equation*}
+	\mathcal A f (Y^j) = \lambda \Big[ f( Y^{-j} ) - f (Y^j) \Big]
+\end{equation*}
+
+\item Intuition: at rate $\lambda$ you transition, so you lose the value of your current state, $f(Y^j)$, and obtain the value of the new state, $f(Y^{-j})$
+
+\item Again see Oksendal for general version of this and more details
+\end{wideitemize}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2. Neoclassical stochastic growth}
+
+{\small
+\begin{wideitemize}
+\item Time is continuous and the horizon is infinite, $t \in [0, \infty)$
+
+\item Economy populated by representative household that operates production technology $F(k_t, z_t)$ where $z_t$ is exogenous productivity
+
+\item Assume $F(\cdot)$ is well behaved: $F(0, z) = 0$, as well as $F_k$, $F_z > 0$, and $F_{kk} < 0$
+
+\item At time $t = 0$, economy's initial state is $(k_0, z_0)$
+
+\item Lifetime value of household is given by
+\begin{equation*}
+	V(k_0, z_0) = \max_{ \{c_t\}_{t \geq 0}} \mathbb{E}_0 \int_0^\infty e^{- \rho t} u(c_t) dt 
+\end{equation*}
+where $u(\cdot)$ is instantaneous utility flow and $\{ c_t \}_{t \geq 0}$ is stochastic consumption process. $\mathbb{E}_0$ denotes expectation over future productivity realizations. We assume labor supply is inelastic and normalized to $1$
+
+\item Capital evolves as before: $\frac{d}{dk} k_t = F(k_t, z_t) - \delta k_t - c_t$
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{3. Productivity as a diffusion process}
+\begin{wideitemize}
+\item We start with diffusion process:
+\begin{equation*}
+	dz_t = - \theta z_t dt + \sigma dB_t,
+\end{equation*}
+where $\theta$ and $\sigma$ are constants
+
+\item This is a continuous-time, mean-reverting AR(1) process called the Ornstein-Uhlenbeck process
+
+\item State space is now given by
+\begin{equation*}
+	\Big\{ (k, z) \mid k \in [0, \bar k] \text{ and } z \in [\underline z, \bar z] \Big\}
+\end{equation*}
+\end{wideitemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+{\small
+\begin{wideitemize}
+\item In discrete time, we would have 
+\begin{equation*}
+	V(k_t, z_t) = \max_c \Big\{ u(c) \Delta t + \frac{1}{1 + \rho \Delta t} \mathbb{E}_t V(k_{t + \Delta t}, z_{t + \Delta t} ) \Big\}
+\end{equation*}
+
+\item Difference from previous lecture: $\mathbb E$ because there is uncertainty
+\begin{align*}
+	(1 + \rho \Delta t) V(k_t, z_t) &= \max_c \Big\{ (1 + \rho \Delta t) u(c) \Delta t+ \mathbb{E}_t V(k_{t + \Delta t}, z_{t + \Delta t})  \Big\} \\
+	\rho \Delta t V(k_t, z_t) &= \max_c \Big\{ u(c) \Delta t+ \mathbb{E}_t V(k_{t + \Delta t}, z_{t + \Delta t} ) - V(k_t, z_t) \Big\} \\
+	\rho V(k_t, z_t) &= \max_c \Big\{ u(c) + \mathbb{E}_t \frac{V(k_{t + \Delta t}, z_{t + \Delta t} ) - V(k_t, z_t)}{\Delta t} \Big\}
+\end{align*}
+
+\item Take limit $\Delta t \to 0$ and drop time subscripts: 
+\begin{equation*}
+	\rho V(k, z) = \max_c \Big\{ u(c) + \mathbb{E} \frac{d V(k, z)}{dt} \Big\}
+\end{equation*}
+
+\item What remains? Characterizing continuation value $\frac{d}{dt} V(k, z)$ (i.e., characterizing how process $dV$ evolves)
+
+\end{wideitemize}
+}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{wideitemize}
+\item The generator $\mathcal A$ is exactly the answer to this question! I.e., 
+\begin{align*}
+	\mathbb E \frac{d V(k, z)}{d t} &= \mathcal A V(k , z) \\
+	&= \Big( F(k, z) - \delta z - c \Big) \partial_k V(k, z) - \theta z \partial_z V(k, z) + \frac{\sigma^2}{2} \partial_{zz} V(k, z)
+\end{align*}
+
+\item Therefore, we arrive at the Hamilton-Jacobi-Bellman equation
+\begin{align*}
+	\rho V(k, z) = \max_c \Big\{ & u(c) + \Big( F(k, z) - \delta z - c \Big) \partial_k V(k, z) \\
+	&- \theta z \partial_z V(k, z) + \frac{\sigma^2}{2} \partial_{zz} V(k, z) \Big\}
+\end{align*}
+with first-order condition 
+\begin{equation*}
+	u'(c(k, z)) = \partial_k V(k, z)
+\end{equation*}
+\end{wideitemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{4. Productivity as a Poisson process}
+
+{\small
+\begin{wideitemize}
+\item Next, consider Poisson process for $\{ z_t \}$ with $z_t \in \{z^L, z^H\}$
+
+\item Generator now given by
+\begin{equation*}
+	\mathcal A V(k, z^j) = \Big( F(k, z) - \delta z - c \Big) \partial_k V(k, z) + \lambda \Big[ V(k, z^{-j}) - V(k, z^j) \Big]
+\end{equation*}
+
+\item Note: derivation of HJB exactly as before \textit{up to} characterizing $\mathbb E [d V]$
+
+\item With Poisson process, HJB becomes
+\begin{align*}
+	\rho V(k, z^j) = \max_c \Big\{ & u(c) + \Big( F(k, z) - \delta z - c \Big) \partial_k V(k, z) \\
+	&+ \lambda \Big[ V(k, z^{-j}) - V(k, z^j) \Big] \Big\}
+\end{align*}
+with first-order condition 
+\begin{equation*}
+	u'(c(k, z^j)) = \partial_k V(k, z^j)
+\end{equation*}
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5.1. Example: income fluctuations}
+
+{\small
+\begin{wideitemize}
+\item Economy is populated by representative household that faces income risk
+
+\item Household accumulates wealth according to
+\begin{equation*}
+	\dot a_t = r a_t + e^{z_t} - c_t 
+\end{equation*}
+subject to borrowing constraint $a_t \geq 0$
+
+\item Preferences again: $V_0 = \max \mathbb{E}_0 \int_0^\infty e^{- \rho t} u(c_t) dt$
+
+\item Income follows diffusion process: $d y_t = - \theta y_t dt + \sigma dB_t$
+
+\item Away from borrowing constraint, HJB given by
+\begin{equation*}
+	\rho V = \max_c \Big\{ u(c) + (r a + e^{z} - c) V_a - \theta z V_z + \frac{\sigma^2}{2} V_{zz} \Big\}
+\end{equation*}
+with $V_a = \partial_a V(a, z)$ (you'll see this often) 
+\end{wideitemize}
+}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5.2. Example: firm profit maximization}
+
+{\small
+\begin{wideitemize}
+\item Firm maximizes NPV of profit: $V_0 = \max \mathbb{E}_0 \int_0^\infty e^{- r t} \pi_t dt$
+
+\item For now, profit given by: $\pi_t = A_t n_t^\alpha - w_t n_t$ where firm chooses labor $n_t$ \\
+Assume $\alpha < 1$, so this is a decreasing-returns production function
+
+\item Firm is small and takes wage $\{ w_t \}$ as given (wages determined in general equilibrium)
+
+\item Productivity follows two-state high-low process, with $A_t \in \{ A^\text{rec}, A^\text{boom} \}$
+
+\item Recursive representation: $A$ is only state variable, $w_t = w(A_t)$
+\begin{equation*}
+	r V(A^\text{boom}) = \max_n \Big\{ A^\text{boom} n^\alpha - w(A^\text{boom}) n + \lambda \Big[ V(A^\text{rec}) - V(A^\text{boom}) \Big] \Big\}
+\end{equation*}
+with first-order condition
+\begin{equation*}
+	n = \bigg(\frac{\alpha A^j}{w(A^j)}\bigg)^\frac{1}{1-\alpha}
+\end{equation*}
+
+\end{wideitemize}
+}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5.3. Example: capital investment with adjustment cost}
+
+{\small
+\begin{wideitemize}
+\item Firm again maximizes NPV of profit: $V_0 = \max \mathbb{E}_0 \int_0^\infty e^{- r t} \pi_t dt$
+
+\item Now: let $\psi(\cdot)$ denote an adjustment cost
+\begin{align*}
+	\pi_t &= e^{A_t} k_t^\alpha - Q_t \iota_t - \psi(\iota_t, k_t) \\
+	d k_t &= (\iota_t - \delta k_t) dt \\
+	d A_t &= - \theta A_t dt + \sigma dB_t
+\end{align*}
+
+\item Firm is small and takes capital price as given 
+
+\item Recursive representation in terms of $(k, A)$, i.e., $Q_t = Q(k_t, A_t)$
+\begin{align*}
+	r V(k, A) = \max_\iota \Big\{ &e^{A_t} k_t^\alpha - Q(A) \iota_t - \psi(\iota_t, k_t) + (\iota - \delta k) \partial_k V(k, A) \\
+	& - \theta A \partial_A V(k, A) + \frac{\sigma^2}{2} \partial_{AA} V(k, A) \Big\}
+\end{align*}
+with first-order condition: $Q(k, A) + \partial_\iota \psi(\iota(k, A), k) = \partial_k V(k, A)$
+\end{wideitemize}
+}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5.4. Example: investing in stocks}
+
+{\small
+\begin{wideitemize}
+\item Suppose you optimize lifetime utility $V_0 = \mathbb{E}_0 \int_0^\infty u(c_t) dt$
+
+\item You can trade two assets: riskfree bond (return $r dt$), and risky stock 
+\begin{equation*}
+	dR = (r + \pi) dt + \sigma dB, \text{ where } \pi \text{ is the equity premium}
+\end{equation*}
+
+\item You have wealth $a_t$ and invest a share $\theta_t$ in stocks, thus,
+\begin{equation*}
+	da_t = \theta_t a_t dR_t + (1-\theta_t) a_t r_t dt + y - c_t
+\end{equation*}
+or, rearranging, and dropping $t$ subscripts
+\begin{equation*}
+	da = r a + \theta a \pi dt + y - c + \theta a \sigma dB 
+\end{equation*}
+
+\item HJB becomes:
+\begin{equation*}
+	\rho V(a) = \max_{c, \theta} \Big\{ u(c) + (  r a + \theta a \pi dt + y - c  ) V'(a) + \frac{1}{2} (\sigma \theta a)^2 V''(a) \Big\}
+\end{equation*}
+with FOCs: (i) $u'(c) = V'(a)$ and (ii) $\theta = -\frac{\pi}{\sigma^2} \frac{ V'(a) }{a V''(a)}$
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5.5. Example: tax competition}
+
+{\small
+\begin{wideitemize}
+\item Two countries, $i \in \{A, B\}$, setting corporate tax rates $\tau_t^i$ on firms operating / headquartered in country $i$
+
+\item Mass of multinational firms $j$, with $\mu_t$ denoting $\%$ in country $A$ at time $t$
+
+\item Firms relocate activity / headquarters at rate $\theta$ towards low-tax country:
+\begin{equation*}
+	d \mu_t = \theta \mu_t (\tau_t^B - \tau_t^A)^\gamma dt  
+\end{equation*}
+
+\item Country $A$ maximizes tax revenue: $\max \int_0^\infty e^{- \rho t} \tau_t^A \mu_t dt$. Countries compete over taxes $\{ \tau_{it} \}$
+
+\item Dynamic Nash: country $A$ sets $\tau_t^A$ as best response taking $\tau_t^B$ as given 
+
+\item Recursive representation: the only state variable is $\mu_t$
+\begin{equation*}
+	\rho V^A(\mu) = \max_{\tau^A} \Big\{ \tau^A \mu + \theta \mu \Big( \tau^B(\mu) - \tau^A \Big)^\gamma \partial_\mu V^A(\mu) \Big\}
+\end{equation*}
+Best response strategies: $0 = \mu + \gamma \theta \mu (\tau^B(\mu) - \tau^A)^{\gamma - 1} V_\mu^A(\mu)$
+\end{wideitemize}
+}
+\end{frame}
+
+
+
+
+
+\end{document}
