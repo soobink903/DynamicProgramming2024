@@ -261,20 +261,28 @@ $\implies$ \textit{focus on tools, but with tons of applications }
 \begin{witemize}
 \item Macro: consumption, investment, portfolio allocation, ... 
 
+\vspace{-2mm}
 \item Labor: search, wage bargaining, ... 
 
+\vspace{-2mm}
 \item IO: competition and games, pricing, ...
 
+\vspace{-2mm}
 \item Finance: asset pricing, dynamic capital structure, portfolio choice, ... 
 
+\vspace{-2mm}
 \item Growth: technology adoption, poverty traps, firm innovation, ... 
 
-\item Urban: migration in spatial models, ... 
+\vspace{-2mm}
+\item Trade / Urban: migration in spatial models, ... 
 
+\vspace{-2mm}
 \item Inequality: evolution of income-wealth distribution, ... 
 
+\vspace{-2mm}
 \item Game theory: dynamic games, ... 
 
+\vspace{-2mm}
 \item ... much, much more 
 
 \end{witemize}
@@ -288,18 +296,15 @@ $\implies$ \textit{focus on tools, but with tons of applications }
 \begin{witemize}
 \item Course builds on excellent teaching material developed by others
 
-\item Huge thanks to David Laibson for making available his incredible course on dynamic programming 
+\item Huge thanks to David Laibson and Benjamin Moll for making available their incredible teaching material
 
 \url{https://projects.iq.harvard.edu/econ2010c/lecturesDLaibson}
 
-\item Benjamin Moll's teaching material and code tutorials are among the best / most pedagogical I know
-
 \url{https://benjaminmoll.com/}
 
-\item Many others ... (this slide will evolve)
+\item Grateful to many others whose material I build on: Pablo Kurlat, Gabriel Chodorow-Reich, Gianluca Violante, ...  
 
-\item Closest textbooks: Stokey-Lucas, Ljungqvist-Sargent, Acemoglu, Romer
-
+\item Only required textbook: LeVeque on finite difference methods (check syllabus for many other recommendations)
 \end{witemize}
 \end{frame}
 
@@ -312,7 +317,7 @@ $\implies$ \textit{focus on tools, but with tons of applications }
 \item You should start using git (via GitHub) in your own work from the start
 
 \item Course material will be available via a GitHub organization at:
-\url{https://github.com/schaab-teaching/DynamicProgramming}
+\url{https://github.com/schaab-teaching/DynamicProgramming2024}
 
 \item You should create a GitHub account if you don't already have one
 
@@ -330,23 +335,60 @@ $\implies$ \textit{focus on tools, but with tons of applications }
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Admin}
 \begin{witemize}
-\item PSETs every week, solutions will be provided
+\item Course co-taught by Kiyea and myself
 
-$\implies$ \textit{You are responsible from now on}
+\item Lectures will focus on theory and applications; sections will teach you coding
 
-\item Final exam will be close to the PSETs
+\item Problem sets every week. Two parts in two separate (!) docs: analytical and numerical. They are optional. Final counts for 100\% of your grade. 
 
-\item Recommended books:
-\begin{itemize}
-	\item Ljungqvist and Sargent
-	\item Stokey and Lucas
-	\item Romer
-	\item Acemoglu
-	\item Oksendal
-	\item LeVeque
-	\item Kamien and Schwartz
-	\item Stachurski / Miao / ...
-\end{itemize}
+{\footnotesize \textit{You are responsible from now on}}
+
+\item {\color{blue} \textbf{However}}: completing the homework earns you extra credit, up to 60\%
+
+{\footnotesize To illustrate, suppose you score 75/100 on exam. Without homework, 75\%. If you complete half of the problems each week: 30 + 0.7*75 = 82.5\%. If you complete all problems: 60 + 0.4*75 = 90\%.} 
+
+\item Final exam will be close to the homework: I want to maximally incentivize you to work hard on the homework
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Honor Code}
+
+Rules of the game:
+
+\vspace{5mm}
+\begin{quote}
+	By turning in homework to receive extra credit, I affirm that (i) I did not consult past solution keys and (ii) I intellectually contributed to each problem answer I am submitting.
+\end{quote}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Course Overview}
+
+Part I: dynamic programming (with examples and applications)
+\begin{witemize}
+\vspace{1mm}
+\item Lectures 1-2: Dynamic programming in discrete time
+\vspace{-2mm}
+\item Lectures 3-4: Deterministic dynamic programming in continuous time
+\vspace{-2mm}
+\item Lectures 5-6: Stochastic dynamic programming in continuous time
+\end{witemize}
+
+\vspace{5mm}
+Part II: (even more) applications
+\begin{witemize}
+\vspace{1mm}
+\item Lectures 7-8: Consumption
+\vspace{-2mm}
+\item Lectures 9: Investment
+\vspace{-2mm}
+\item Lectures 10-11: Inequality
+\vspace{-2mm}
+\item Lectures 12-13: Welfare 
 \end{witemize}
 \end{frame}
 
@@ -357,7 +399,7 @@ $\implies$ \textit{You are responsible from now on}
 \thispagestyle{empty}
 \addtocounter{framenumber}{-1}
 
-Part 1: neoclassical growth model --- planning problem
+Part 1: Neoclassical growth model
 \begin{enumerate}
 	\item Environment
 	\item Planning problem
@@ -373,11 +415,7 @@ Part 2: dynamic programming
 \end{enumerate}
 
 \vspace{5mm}
-Part 3: neoclassical growth model --- competitive equilibrium
-\begin{enumerate}
-	\item Environment
-	\item Competitive equilibrium
-\end{enumerate}
+Part 3: Competitive equilibrium
 
 \end{frame}
 
@@ -388,20 +426,9 @@ Part 3: neoclassical growth model --- competitive equilibrium
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{transitionframe}
-	{\color{white} \Huge \textbf{Part 2: planning problem} \vspace{2mm}}
+	{\color{white} \Huge \textbf{Part 1: Neoclassical Growth Model} \vspace{2mm}}
 \end{transitionframe}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{}
-\begin{witemize}
-\item Recall: social planner chooses an allocation to maximize welfare subject only to technology and resource constraints
-
-\item 
-
-\end{witemize}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{1. Environment}
@@ -455,6 +482,10 @@ for given $k_0 = \bar k$ (\textbf{initial condition})
 
 \vspace{5mm}
 \begin{witemize}
+\item Notice: we have not introduced prices, markets, budget constraints, etc.
+
+\item Why is planning problem relevant? (i) important in its own right to understand efficiency, and (ii) turns out first welfare theorem applies here, so efficient allocation = competitive equilibrium allocation
+
 \item Social welfare = lifetime utility of representative household (why?)
 
 \item ``choose a feasible allocation'' = choose sequences $\{y_t, c_t, i_t, k_t\}_{t = 0}^\infty$ subject to technologies and resource constraints
@@ -545,7 +576,7 @@ Always count equations and unknowns!!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{transitionframe}
-	{\color{white} \Huge \textbf{Part 3: dynamic programming} \vspace{2mm}}
+	{\color{white} \Huge \textbf{Part 2: Dynamic Programming} \vspace{2mm}}
 \end{transitionframe}
 
 
@@ -565,7 +596,7 @@ Always count equations and unknowns!!
 
 \item We say that $\mathcal X = [0, \bar k]$ is the \textbf{state space} of the neoclassical growth model. The Bellman equation must hold for all feasible levels of capital $k \in \mathcal X$.
 
-\item If $V(k)$ solves the above equation, then it is a solution to the Bellman equation. We now show that the unique value function that solves the sequence problem also solves the Bellman equation
+\item If $V(k)$ solves the above equation, then it is a solution to the Bellman equation. Next: the unique value function that solves sequence problem also solves Bellman equation
 
 \end{witemize}
 \end{frame}
@@ -756,12 +787,12 @@ for all $x$ in the state space
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{transitionframe}
-	{\color{white} \Huge \textbf{Part 4: competitive equilibrium} \vspace{2mm}}
+	{\color{white} \Huge \textbf{Part 3: Competitive Equilibrium} \vspace{2mm}}
 \end{transitionframe}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{4.1. Environment}
+\begin{frame}{1. Environment}
 
 \begin{witemize}
 \item Time is discrete with $t = 0, 1, \ldots$ and there is no uncertainty
