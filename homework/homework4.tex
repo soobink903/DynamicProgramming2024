@@ -85,9 +85,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{202A: Dynamic Programming and Applications\\[5pt] {\Large \textbf{Homework \#1}}}
+\title{202A: Dynamic Programming and Applications\\[5pt] {\Large \textbf{Homework \#4}}}
 
-\author{Andreas Schaab}
+\author{Andreas Schaab\footnote{
+	UC Berkeley. Email: schaab@berkeley.edu.\\
+	This course builds on the excellent teaching material developed, in particular, by David Laibson and Benjamin Moll. I would also like to thank Gabriel Chodorow-Reich, Pablo Kurlat, J\'on Steinsson, and Gianluca Violante, as well as QuantEcon, on whose teaching material I have drawn. 
+}}
 
 \date{}
 
@@ -99,26 +102,589 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Problem 1: XXX}
+\section*{Problem 1: Building Intuition}
+
+\paragraph{Part 1:} 
+Consider the isoelastic utility function:
+\begin{equation*}
+	u(c) = \frac{c^{1-\frac{1}{\sigma}}-1}{1-\frac{1}{\sigma}},
+\end{equation*}
+where $\sigma > 0$.
 
 \begin{enumerate}[(a)]
-\item 
+\item Prove that  $\lim _{\sigma \rightarrow 1} u(c)=\ln (c)$. (Hint: use l'hopital's rule) 
 
+\item The coefficient of relative prudence is $$-\frac{u'''(c)c}{u''(c)}$$ derive it. What is it related to?
 \end{enumerate}
+
+
+\paragraph{Part 2:} 
+Consider an agent who lives for two periods, $t=0,1$. The agent can freely borrow or lend at interest rate $r$. The agent has period preferences given by $u(c_t) = \frac{c_t^{1-\frac{1}{\sigma}}}{1-\frac{1}{\sigma}}$. In period 0, the agent discounts the utility of future consumption at rate $\beta$. The agent receives income $y_0$ in period 0 , but has uncertain income in period 1. Therefore, the agent maximizes expected utility subject to certain income $y_0$ and expected income $\mathbb E(y_1)$.
+
+\begin{enumerate}[(a)]
+\item Derive the consumption Euler equation.
+
+\item Suppose $\sigma \rightarrow \infty$. What conditions are placed on $\beta(1+r)$ if the agent has positive consumption in period 0? Interpret your answer in light of question 1. Recall that we call $\sigma$ the intertemporal elasticity of substitution.
+
+\item Assume $y_1 \in\left\{y_L, y_H\right\}$, with $y_H>y_L$. Argue that this implies $c_1 \in\left\{c_L, c_H\right\}$, with $c_H>c_L$, for some unknown values $c_L$ and $c_H$. Let $b_0$ denote period 0 savings. Then $c_1=(1+r) b_0+y_1$
+\end{enumerate}
+
+
+\paragraph{Part 3:}
+Consider the 2 period model with, for simplicity, $y_1 = 0$. It gives rise to the consumption function 
+\begin{equation*}
+	c_0=\frac{1}{1+\beta^\sigma(1+r)^{\sigma-1}} y_0 .
+\end{equation*}
+
+\begin{enumerate}[(a)]
+\item Differentiate $c_0$ with respect to $1+r$.
+
+\item Explain why your answer to (a) shows that period 0 consumption responds positively to a decrease in the real interest rate if and only if $\sigma>1$. 
+
+\item  Show that:
+\begin{equation*}
+	c_1=\left[\frac{\beta^\sigma(1+r)^\sigma}{1+\beta^\sigma(1+r)^{\sigma-1}}\right] y_0 .
+\end{equation*}
+
+\item Show that if $\sigma>0$, then $\frac{\partial c_1}{\partial(1+r)}>0$.
+
+\item Why does the response of $c_0$ to $(1+r)$ depend on the value of $\sigma$, but the response of $c_1$ does not? (Hint: your answer should reference the direction of income and substitution effects for consumption in each period.)
+\end{enumerate}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace{10mm}
-\section*{Problem 2: XXX}
+\vspace{5mm}
+\section*{Problem 2: Eat-the-pie in discrete time} 
 
-XXX
+Time is discrete and there is no uncertainty. Consider an agent that faces the sequence problem 
+\begin{equation*}
+	\max_{\{c_t\}_{t=0}^\infty} \sum_{t=0}^\infty \beta^t u(c_t),
+\end{equation*}
+subject to the budget constraints
+\begin{equation*}
+	W_{t+1} = R(W_t - c_t)
+\end{equation*}
+where $R$ is the constant (gross) real interest rate and $W_t$ is the agent's wealth at date $t$,
+\begin{equation*}
+	0 \leq c_t \leq W_t,
+\end{equation*}
+and taking as given an initial wealth level 
+\begin{equation*}
+	W_0 > 0.
+\end{equation*}
+
 
 \begin{enumerate}[(a)]
-\item 
+\item Motivate the economic problem above. What are the implicit assumptions? What is economically sensible and what is not sensible about this modeling set-up? Why do you think this problem might be called the ``eat-the-pie model''?
+
+\item Explain why the Bellman equation for this problem is given by: 
+\begin{equation*}
+	v(W) = \sup_{c \in [0, W]} \Big\{u(c) + \beta v\Big(R(W-c)\Big) \Big\} , 
+	\quad\quad \forall W.
+\end{equation*}
+Why is there no expectation operator on the continuation value? Why is there no $t$ subscript on $v(W)$?
+
+\item Using Blackwell's sufficiency conditions, prove that the Bellman operator $B$, defined by
+\begin{equation*}
+	(Bf)(W) = \sup_{c \in [0, W]} \Big\{u(c) + \beta f\Big(R(W-c)\Big) \Big\} , 
+	\quad\quad \forall W.
+\end{equation*}
+is a contraction mapping. You should assume that $u$ is a bounded function. (Why is this boundedness assumption necessary for the application of Blackwell's Theorem?) Explain what the contraction mapping property implies about iterative solution methods.
+
+\item Now assume that, 
+\begin{equation*}
+u(c)=\left\{ 
+\begin{array}{ll}
+\frac{c^{1-\gamma }}{1-\gamma } & \text{if }\gamma \in (0,\infty )\text{ and 
+}\gamma \neq 1 \\ 
+\ln c & \text{if }\gamma =1%
+\end{array}%
+\right\} .
+\end{equation*}%
+(So $u$ is no longer bounded.) Use the guess method to solve the Bellman equation.  Specifically, guess the form of the solution: 
+\begin{equation*}
+v(W)=\left\{ 
+\begin{array}{lll}
+\psi \frac{W^{1-\gamma }}{1-\gamma } & \text{if} & \gamma \in (0,\infty )%
+\text{ and }\gamma \neq 1 \\ 
+\phi +\psi \ln W & \text{if} & \gamma =1%
+\end{array}%
+\right\} .
+\end{equation*}%
+Derive the optimal policy rule: 
+\begin{equation*}
+c=\psi ^{-\frac{1}{\gamma }}W
+\end{equation*}%
+\begin{equation*}
+\psi ^{-\frac{1}{\gamma }}=1-(\beta R^{1-\gamma })^{\frac{1}{\gamma }}
+\end{equation*}%
+Note that this rule applies for all values of $\gamma .$ Confirm that this
+solution to the Bellman Equation works.
+
+\item When $\gamma = 1$ the consumption rule collapses to $c_t = (1-\beta) W_t$. Why does consumption no longer depend on the value of the interest rate (for a given $W_t$)? Hint: think about income effects and substitution effects.
+\end{enumerate}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 3: Consumption-savings with deterministic income fluctuations}
+
+Consider a household with preferences 
+\begin{equation*}
+	\max_{\{c_t\}} \int_0^\infty e^{- \rho t} u(c_t) dt. 
+\end{equation*}
+There is no uncertainty. The household budget constraint is given by
+\begin{equation*}
+	da_t = r_t a_t + w_t - c_t. 
+\end{equation*}
+Aggregate prices follow a deterministic process, $\bm{r} = \{r_t\}$ and $\bm{w} = \{w_t\}$. Finally, the household starts with an initial wealth position $a_0$, and wealth is the only state variable. 
+
+The next Lemma derives more formally the steps we have already been using in the lectures and psets.
+
+
+\vspace{5mm}
+\noindent
+\textbf{Step \#1: Lifetime budget constraint}
+
+\vspace{3mm}
+\noindent
+\begin{lem} (Lifetime Budget Constraint) For any linear ODE 
+	\begin{equation*}
+		\frac{dy}{dt} = r(t) y(t) + x(t)
+	\end{equation*}
+	we have the integration result 
+	\begin{equation*}
+		y(T)  = y(0) e^{\int_0^T r(s) ds} +  \int_0^T e^{\int_t^T r(s) ds }  x(t) dt.
+	\end{equation*}
+	
+\end{lem}
+\vspace{8mm}
+\begin{proof}
+	Consider any ODE
+	\begin{equation*}
+		\frac{dy}{dt} = r(t) y(t) + x(t).
+	\end{equation*}
+	Using an integrating factor approach, we have 
+	\begin{equation*}
+		e^{\int -r(s) ds} \frac{dy}{dt} - e^{\int -r(s) ds}  r(t) y(t) = e^{\int -r(s) ds} x(t).
+	\end{equation*}
+	The LHS can then be written as a product rule, so that 
+	\begin{equation*}
+		\frac{d}{dt} \bigg( y(t) e^{\int -r(s) ds} \bigg) =  \frac{dy}{dt} e^{\int -r(s) ds}  + y(t) e^{\int -r(s) ds} \frac{d}{dt} \bigg( \int -r(s) ds \bigg)  = e^{\int -r(s) ds} x(t).
+	\end{equation*}
+	The last derivative follows from the fundamental theorem of calculus for indefinite integrals. 
+	
+	Alternatively, since I know that I will work on the definite time horizon $t \in [0,T]$, I can choose a slightly different integrating factor: I can write $u(t) = e^{- \int_0^t r(s) ds}$, so 
+	\begin{equation*}
+		e^{\int_0^t -r(s) ds} \frac{dy}{dt} - e^{\int_0^t -r(s) ds}  r(t) y(t) = e^{\int_0^t -r(s) ds} x(t).
+	\end{equation*}
+	Using Leibniz rule, I have 
+	\begin{equation*}
+		\frac{d}{dt} \bigg( y(t) e^{\int_0^t -r(s) ds} \bigg) = \frac{dy}{dt}  e^{\int_0^t -r(s) ds} + y(t) e^{\int_0^t -r(s) ds} \frac{d}{dt} \bigg( \int_0^t -r(s) ds \bigg) =  \frac{dy}{dt}  e^{\int_0^t -r(s) ds} - y(t) e^{\int_0^t -r(s) ds} r(t).
+	\end{equation*}
+	Now, I have 
+	\begin{equation*}
+		\frac{d}{dt} \bigg( y(t) u(t) \bigg) = u(t) x(t).
+	\end{equation*}
+	Finally, this implies 
+	\begin{equation*}
+		y(T) u(T) - y(0) u(0) = \int_0^T u(t) x(t),
+	\end{equation*}
+	or, noting $u(0) = 1$, 
+	\begin{equation*}
+		y(T) e^{- \int_0^T r(s) ds} = y(0) +  \int_0^T e^{- \int_0^t r(s) ds} x(t) dt.
+	\end{equation*}
+	Rearranging, 
+	\begin{equation*}
+		y(T)  = y(0) e^{\int_0^T r(s) ds} +  \int_0^T e^{\int_t^T r(s) ds }  x(t) dt.
+	\end{equation*}
+\end{proof}
+
+
+\begin{enumerate}
+\item [(a)] Use this result to characterize the initial lifetime wealth $W$ of the household. We have $W = W(a_0, \bm{r}, \bm{w})$. 
+\end{enumerate}
+
+
+\vspace{5mm}
+\noindent
+It will be a useful exercise to characterize the response of initial lifetime wealth $dW$ to a general perturbation of this economy, $\{da_0, d \bm r, d \bm w\}$. We have:
+\begin{equation*}
+	dW = W_{a_0} da_0 + W_{\bm r} d \bm{r} + W_{ \bm w} d \bm w. 
+\end{equation*}
+
+
+\begin{enumerate}
+\item [(b)] Work out each of these derivatives ($ W_{a_0}$, $W_{\bm r}$ and $W_{ \bm w}$) and interpret 
+\end{enumerate}
+
+
+\vspace{5mm}
+\noindent
+\textbf{Step \#2: Euler equation }
+
+\begin{enumerate}
+\item [(c)] Use the HJB to derive the euler equation
+\begin{equation*}
+	\frac{dV_a}{V_a} = \frac{du_c}{u_c} =  (\rho - r_t) dt. 
+\end{equation*}
+
+\item [(d)] In this setting, where $dr_t$ and $dw_t$ are entirely deterministic, the Euler equation is of course also a deterministic equation. Let $R_{s,t}=e^{-\int_s^t r_s ds}$. Now show that the continuous-time Euler equation in this simple setting without uncertainty between two dates $t > s$ is given by
+\begin{equation*}
+	u_c(c_s) = e^{- \rho (t-s)} R_{s,t} u_c(c_t). 
+\end{equation*}
+
+\item [(e)] Show that with CRRA utility we can write consumption as 
+\begin{equation*}
+	c_t = c_0 \bigg[ e^{- \rho t} R_{0,t} \bigg]^\frac{1}{\gamma} .
+\end{equation*}
+
+\end{enumerate}
+%\vspace{3mm}
+%\noindent
+%In particular, as long as households remain unconstrained I can express consumption at time $t$ in terms of the consumption choice at any other date. In particular, 
+%\begin{equation*}
+	%c_t = (u_c)^{-1} \bigg[ u_c(c_0) \frac{1 }{e^{-\rho t}R_{0,t}} \bigg].
+%\end{equation*}
+%Now the only thing I need to be really careful about is whether I want preference parameters (other than $\rho$) to be time-varying. That is, do I want $u_t = u(c_t)$, or $u_t = u(t, c_t)$? If I decide that preferences are only a function of consumption but otherwise constant, then so is $u_c$ and 
+%\begin{equation*}
+	%c_t = c_0 (u_c)^{-1} \bigg[ \frac{1 }{e^{-\rho t}R_{0,t}} \bigg].
+%\end{equation*}
+%In particular, under CRRA where $u_c = c^{-\gamma}$, I get 
+%\begin{equation*}
+	%c_t = c_0 \bigg[ e^{- \rho t} R_{0,t} \bigg]^\frac{1}{\gamma} .
+%\end{equation*}
+
+
+\vspace{5mm}
+\paragraph{Step \#3: MPC}
+All that is left for to do is put together the lifetime budget constraint with the Euler equation, and then take a derivative. To that end, define the household's MPC as 
+\begin{equation*}
+	\text{MPC}_{0,t} = \frac{\partial c_t}{\partial a_0} = \frac{\partial c_t}{\partial W}.
+\end{equation*}
+This definition of course captures the intuition that the household experiences a marginal change in assets (or wealth or unearned income) in period $0$, and then changes his path of consumption expenditures $\{ c_t\}$ accordingly. 
+
+\begin{enumerate}
+\item [(f)] Using the lifetime budget and the consumption policy function show
+\begin{align*}
+	W &= c_0 \int_0^\infty e^{- \frac{\rho}{\gamma} t} R_{0,t}^\frac{1-\gamma}{\gamma} dt \\
+\end{align*}
+
+\item [(g)] To get started with a simple case, assume that $r_t = r$ is constant. Then 
+\begin{equation*}
+	R_{0,t} = e^{\int_0^t r ds } = e^{ r t}.
+\end{equation*}
+Let $\kappa =- \frac{1}{\gamma} \big[ \rho - (1-\gamma) r \big] $. Now show that the MPC in this setting is constant and given by
+\begin{equation*}
+	\text{MPC} = \kappa
+\end{equation*}
 
 \end{enumerate}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 4: Consumption-savings with uncertain wealth dynamics}
+
+We now solve an analytically tractable variant of a household's consumption-savings problem when facing stochastic returns on savings. The key to making this tractable is to assume that the household faces no borrowing constraint.
+
+% We now solve a version of the ``buffer stock model'', in which an agent  income fluctuations problem in continuous time. In discrete time, the problem is as follows:
+
+% \paragraph{Discrete time.} The canonical buffer stock model in discrete-time is a variant of the life-cycle model of consumption featuring idiosyncratic income risk. A household's preferences are given by 
+% \begin{equation}
+% 	\sum_{t=0}^\infty \beta^t u(c_t),
+% \end{equation}
+% and the critical assumption is that $\beta R = 1$, where $\beta$ is the household's discount parameter and $R$ is the gross interest rate. In a model without uncertainty, this assumption would imply a constant consumption profile over time.
+% 
+% The household's budget constraint is encoded in its evolution of wealth, given by 
+% \begin{equation}
+% 	a_{t+1} = R(y_t + a_t - c_t),
+% \end{equation}
+% where $y_t \sim^{iid} F$ is an income shock that is independent and identically distributed over time. We may furthermore assume that agents face an exogenously determined, uniform borrowing constraint, $a_t \geq \underline{a}$, that is tighter than the natural borrowing constraint. 
+% 
+% The recursive problem of the household can then be written using the Bellman equation
+% \begin{equation}
+% 	v(a_t) = \max_{c_t} u(c_t) + \beta E_t[v(a_{t+1})],
+% \end{equation}
+% subject to 
+% \begin{align*}
+% 	a_{t+1} &= R(a_t + y_t - c_t) \\
+% 	a_{t} \geq 0.
+% \end{align*}
+
+
+% \textbf{Continuous time without borrowing constraint.} 
+Time is continuous. The evolution of wealth is given by 
+\begin{equation*}
+	da_t = (ra_t - c_t) dt + \sigma dB_t,
+\end{equation*}
+where $B_t$ is standard Brownian motion. (Recall this is the continuous time analog to adding iid. shocks to the household's wealth evolution in discrete time.) We assume that the household is not subject to a borrowing constraint, so $a_t$ can go negative. 
+
+
+\begin{enumerate}[(a)]
+\item Write the generator for the stochastic process of wealth. Use it to derive the HJB:
+\begin{equation*}
+	\rho v(a) = \max_c \bigg\{ u(c) + v'(a) [ra - c] + \frac{1}{2} v''(a) \sigma^2 \bigg\}
+\end{equation*}
+Why is there no $t$ subscript on $v(a)$? What kind of differential equation is this? Why is it not a PDE?
+
+\item Show we have the following HJB envelope condition 
+\begin{equation*}
+	(\rho - r) v'(a) = v''(a) [ra - c(a)] + \frac{1}{2} v'''(a) \sigma^2.
+\end{equation*}
+
+\item Assume that preferences are log, with $u(c) = \log c$. Show the HJB satisfies (take FOC, differentiate FOC wrt a and integrate FOC)
+\begin{equation*}
+	\rho \kappa + \frac{\rho}{c'(a)} \log c(a) = \log c(a) + \frac{r a}{c(a)} - 1 - \frac{\sigma^2}{2} \frac{c'(a)}{c(a)^2}.
+\end{equation*}
+\end{enumerate}
+
+
+\vspace{5mm}
+\noindent
+ We can see immediately that the $c(a)^2$ term in the denominator on the RHS is going to make solving for a policy function $c$ very difficult. In your own research, your first attempt will often not work out. So you would arrive at this expression, and conclude that you won't be able to solve for the policy function in closed form. But after staring at the expression for a while, you may also realize that there is a simple fix that will come to the rescue: Consider an alternative wealth evolution equation given by 
+ \begin{equation*}
+	 da_t = (r a_t - c_t)dt + \sigma a_t dB.
+ \end{equation*}
+
+
+\begin{enumerate} 
+\item [(d)] Show the HJB becomes 
+\begin{equation*}
+	\rho v(a) = u(c(a)) + v'(a)[ra -c(a)] + \frac{\sigma^2}{2} a^2 v''(a). 
+\end{equation*}
+
+\item [(e)] Guess that the policy function is linear in wealth (because of log), in particular: $c(a_t) = \rho a_t$. And show: 
+\begin{align*}
+	v(a) &= \frac{1}{\rho} \log(\rho a) + \frac{r - \rho}{\rho^2} - \frac{\sigma^2}{2\rho^2}.
+\end{align*} 
+Interpret this expression. What is the household's MPC in this model? 
+
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 5: The equity premium}
+
+Consider a representative household. Time is discrete. We consider a set of assets that the household can trade and index these assets by $j$. For each asset $j$, optimal portfolio choice implies an Euler equation of the form
+\begin{equation*}
+	U'(C_t) = \beta E[R_{t+1}^j U'(C_{t+1})]
+\end{equation*}
+where $R_{t+1}^j$ is the potentially stochastic return on asset $j$, and where $\beta = e^{-\rho}$. We can write 
+\begin{equation*}
+	1 = e^{-\rho} E\bigg[R_{t+1}^j \frac{U'(C_{t+1})}{U'(C_t)} \bigg].
+\end{equation*}
+
+
+\begin{enumerate}
+\item [(a)] Explain why the above Euler equation must hold for every asset $j$. Make sure you are comfortable with this logic. Start with a CRRA utility function $u(c) = \frac{1}{1-\gamma} c^{1-\gamma}$ and let $r_{t+1}^j = \ln R_{t+1}^j$. Show that
+\begin{equation*}
+	1 = E\bigg[ e^{r_{t+1}^j - \rho -\gamma \Delta \ln  C_{t+1}} \bigg],
+\end{equation*}
+where $\Delta \ln C_{t+1} \equiv \ln C_{t+1} - \ln C_t$.
+\end{enumerate}
+
+
+\paragraph{Euler equation under log-normality.} 
+A log-normal RV is characterized via the representation
+\begin{equation*}
+	X = e^{\mu + \sigma Z},
+\end{equation*}
+where $Z$ is a standard normal random variable, and $(\mu,\sigma)$ are the parameters of the log-normal. The mean of the log-normal is given by
+\begin{equation*}
+	E(X) = e^{\mu + \frac{1}{2} \sigma^2}
+\end{equation*}
+and its variance by
+\begin{equation*}
+	\text{Var}(X) = [e^{\sigma^2}-1] e^{2\mu + \sigma^2}.
+\end{equation*}
+
+
+The Euler equation can be further simplified when we assume
+\begin{equation*}
+	R_{t+1}^j = e^{r_{t+1}^j + \sigma^j \epsilon_{t+1}^j - \frac{1}{2} (\sigma^j)^2},
+\end{equation*}
+where $\epsilon_{t+1}^j \sim \mathcal{N}(0,1)$, so that 
+\begin{equation*}
+	R_{t+1}^j  \sim \log \mathcal{N} \bigg(r_{t+1}^j - \frac{1}{2} (\sigma^j)^2, \sigma^j\bigg).
+\end{equation*}
+Assume also that $\Delta \ln  C_{t+1}$ is conditionally normal, with mean $\mu_{C,t}$ and variance $\sigma_{C,t}^2$. Furthermore assume that the two normals are also jointly, conditionally normal.
+
+
+\begin{enumerate}
+\item [(b)] Derive the asset pricing equation
+\begin{equation*}
+	1 = E_t [\exp(X_t)],
+\end{equation*}
+where 
+\begin{equation*}
+	X_t = -\rho + r_{t+1}^j + \sigma^j \epsilon_{t+1}^j - \frac{1}{2} (\sigma^j)^2 - \gamma \Delta \ln C_{t+1} 
+\end{equation*}
+so
+\begin{equation*}
+X_t \sim -\rho + \mathcal{N}\bigg(r_{t+1}^j - \frac{1}{2} (\sigma^j)^2 - \gamma \mu_{C,t}, (\sigma^j)^2 + \gamma^2 \sigma_{C,t}^2 - 2 \rho_{j,C} \gamma \sigma^j \sigma_{C,t} \bigg).
+\end{equation*}
+
+\item [(c)] Taking expecations and logs show:
+\begin{equation}
+	0 =  - \rho + r_{t+1}^j - \frac{1}{2} (\sigma^j)^2 - \gamma E_t(\Delta \ln C_{t+1}) + \frac{1}{2} \text{Var}_t( \sigma^j \epsilon_{t+1}^j - \gamma \Delta \ln C_{t+1})
+\end{equation}
+
+\item [(d)] Use this last formula to derive the risk-free rate $r^f$ (Hint: for $j=f$ set $\sigma^f=0$)
+
+\item [(e)] Consider a class of equities with risk $\sigma^E$, we define the equity premium as $$\pi_{t+1}^E \equiv r_{t+1}^E - r_{t+1}^f $$
+Show $$\pi_{t+1}^E = \gamma \sigma_{C,E}$$ where $\sigma_{C,E}$ is the covariance between equity returns and log consumption growth. 
+
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{5mm}
+\section*{Problem 6: Brunnermeier-Sannikov (2014)}
+
+In this problem, we work through a simple variant of the seminal Brunnermeier and Sannikov (2014, AER) paper. This problem is difficult, and it will bring together many of the tools we have built up so far. It will combine a model of intertemporal consumption-savings with a model of investment (similar to Tobin's Q) and portfolio choice.
+
+
+Consider an agent (household) that can consume, save and invest in a risky asset. Denote by $\{ D_t \}_{t \geq 0}$ the \textit{dividend stream} and by $\{ Q_t \}_{t \geq 0}$ the price of the asset. Assume that the asset price evolves according to 
+\begin{equation*}
+	\frac{ dQ }{Q} = \mu_Q dt + \sigma_Q dB,
+\end{equation*}
+where you can interpret $\mu_Q$ and $\sigma_Q$ as simple constants (alternatively, think of them as more complicated objects that would be determined in general equilibrium, which we abstract from here).
+
+
+This is a model of two assets, capital and bonds. Bonds pay the riskfree rate of return $r_t$. Capital is accumulated and owned by the agent. Capital is traded at price $Q_t$ and yields dividends at rate $D_t$.
+
+The key interesting feature of this problem is that the agent faces both (idiosyncratic) earnings risk and (aggregate) asset price risk.
+
+Households take as given all aggregate prices and behave according to preferences given by
+\begin{equation*}
+	\mathbb{E}_0 \int_0^\infty e^{- \rho t} u(c_t) dt.
+\end{equation*}
+
+Households consume and save, investing their wealth into bonds and capital. Letting $k$ denote a household's units of capital owned and $b$ units of bonds, the budget constraint is characterized by
+\begin{align*}
+	dk_t &= \Phi(\iota_t) k_t - \delta k_t \\
+	db_t &= r_t b_t + D_t k_t + w_t z_t - c_t -  \iota_t k_t.
+\end{align*}
+The rate of investment is given by $\iota_t$. Investment adjustment costs are captured by the concave technology $\Phi$. Dividends are paid to households in units of the numeraire, thus entering the equation for $db$. The law of motion for household earnings are given by
+\begin{equation*}
+	dz = \mu_z dt + \sigma_z dW. 
+\end{equation*}
+
+
+\begin{enumerate}[(a)]
+\item Interpret all terms of the two budget constraints. Make sure these budget constraints make sense to you.
+\end{enumerate}
+
+
+\vspace{5mm}
+\noindent
+It is convenient to rewrite the household problem in terms of liquid net worth, defined by the equations 
+\begin{align*}
+	\theta n &= Q k \\
+	(1-\theta) n &= b,
+\end{align*}
+so that total liquid net worth is $n = Qk + b$.
+
+
+\begin{enumerate}
+\item [(b)] How would you refer to $\theta$? Assume households' capital accumulation is non-stochastic. That is, there is no capital quality risk. Show that the liquid net worth evolves according to 
+\begin{equation*}
+	dn = rn +  \theta n \bigg[ \frac{D - \iota }{Q} +  \frac{dQ}{Q} + \Phi(\iota) - \delta - r \bigg]  + w z - c .
+\end{equation*}
+ 
+\item [(c)] Argue why the choice of $\iota$ is entirely static in this setting and show it is only a function of capital $\iota = \iota(Q)$ 
+\end{enumerate}
+
+
+\vspace{5mm}
+\noindent
+Recall also that households take as given aggregate ``prices'' $(r, w, D, Q)$.  This will allow us to work with a simplified representation. Define 
+\begin{equation*}
+	dR = \underbrace{\frac{D - \iota (Q) }{Q}}_\text{Dividend yield} dt + \underbrace{\Big[\Phi(\iota(Q)) - \delta \Big] dt +  \frac{dQ}{Q}}_\text{Capital gains} \equiv \mu_R dt + \sigma_R dB
+\end{equation*}
+to be the effective rate of return on households' capital investments. And where
+\begin{align*}
+	\mu_R &= \frac{D - \iota (Q) }{Q}  + \Phi(\iota(Q)) - \delta + \mu_Q \\
+	\sigma_R &= \sigma_Q. 
+\end{align*}
+After solving for $\iota = \iota(Q)$, this return is exogenous from the perspective of the household: it depends on macro conditions and prices, but not on the particular portfolio composition of the household.
+
+
+\begin{enumerate}
+\item [(d)] Show that the law of motion of the household's liquid net worth satisfies the following equation. Why do you think using liquid net worth is useful? And why do we want this law of motion?
+\begin{equation*}
+	dn = rn + \theta n (\mu_R - r) + wz - c + \theta n \sigma_R dB. 
+\end{equation*}
+\end{enumerate}
+
+
+\paragraph{Recursive representation.} We denote the agent's individual states by $(n, z)$. But notice that the agent also faces time-varying prices (macroeconomic aggregates) like $Q_t$. To make our lives simple, we make the following assumption: Suppose there is a scalar stochastic process $X_t$ that fully summarizes the aggregate state of the macroeconomy. This means that we can represent all other prices as functions of it, i.e., 
+\begin{equation*}
+	r_t = r(\Gamma_t), \hspace{5mm}	D_t = D(\Gamma_t), \hspace{5mm}	Q_t = Q(\Gamma_t).
+\end{equation*}
+We refer to $X_t$ as the \textit{aggregtate state of the economy}. And let's assume that it follows a simple diffusion process given by
+\begin{equation*}
+	d X = \mu dt + \sigma dB.
+\end{equation*}
+This now allows us to write the household problem recursively with $X$ as an extra state variable. That is, our state variables are $(n, z, X)$. Note that otherwise, we would need to keep track of all the prices separately. 
+
+
+\begin{enumerate}
+\item [(e)] Show that the household problem satisfies the following HJB
+\begin{align*}
+	\rho V(n, z, X) = \max_{c, \theta} \bigg\{& u(c) + V_n \Big[ rn + \theta n (\mu_R - r) + wz - c \Big] + \frac{1}{2} V_{nn} (\theta n \sigma_R)^2 + V_z \mu_z + \frac{1}{2} V_{zz} \sigma_z^2 \\
+	&+ V_{n X} \theta n \sigma_R \sigma + V_X \mu + \frac{1}{2} \sigma^2 V_{X} \bigg\},
+\end{align*}
+where you can assume that $\mathbb{E}(dW dB) = 0$. This means that households' earnings risk is uncorrelated with the aggregate state $\Gamma$. This assumption is at odds with the data! But it simplifies the HJB here. (Why?)
+
+\item [(f)] Derive the first-order conditions for consumption and portfolio choice. 
+
+\item [(g)] Difficult: Use the envelope condition and apply Ito's lemma to $V_n(n, z, X)$, and show that household marginal utiliy evolves according to 
+\begin{equation*}
+	\frac{d u_c}{u_c} = (\rho - r) dt -  \frac{\mu_R - r}{\sigma_R} dB  - \gamma \frac{c_z}{c} \sigma_z dW .
+\end{equation*}
+
+\item [(h)] Difficult: Show that household consumption evolves according to 
+\begin{align*}
+	\frac{dc}{c} = & \frac{r - \rho}{\gamma} dt + \frac{1}{2} (1+\gamma) \bigg[ \bigg( \frac{\mu_R - r}{\gamma \sigma_R} \bigg)^2 + \bigg( \frac{c_z}{c} \sigma_z \bigg)^2 \bigg] dt +  \frac{\mu_R - r}{\gamma \sigma_R} dB  + \frac{c_z}{c} \sigma_z dW .
+\end{align*}
+This implies that 
+\begin{align*}
+	\mathbb E\bigg[ \frac{dc}{c} \bigg] = \frac{r - \rho}{\gamma} dt + \frac{1}{2} (1+\gamma) \bigg[ \bigg( \frac{\mu_R - r}{\gamma \sigma_R} \bigg)^2 + \bigg( \frac{c_z}{c} \sigma_z \bigg)^2 \bigg] dt. 
+\end{align*}
+Relate this expression to our discussion of \textit{precautionary savings} in class.
+
+%\vspace{5mm}
+%\noindent
+%\textbf{Comparison to Brunnermeier and Sannikov.} It turns out that I already derived the analog to Bru-San's Proposition II.2 a long time ago. I have 
+%\begin{align*}
+%	\frac{dV_n}{V_n} = & (\rho - r)  -   \frac{\mu_R - r}{\sigma_R} dB  + \frac{V_{nz}}{V_n} \sigma_z dW,
+%\end{align*}
+%where they call $V_n = \theta$. For the sake of comparison, let $V_n = \theta^\text{BS}$. Then, 
+%\begin{equation*}
+%	\frac{d \theta^\text{BS}}{\theta^\text{BS}} = \mu_\theta dt + \sigma_\theta^B dB + \sigma_\theta^W dW,
+%\end{equation*}
+%where 
+%\begin{align*}
+%	\mu_\theta  &= \rho - r \\
+%	\underbrace{- \sigma_Q \sigma_\theta^B }_\text{Risk premium} &= \underbrace{ \frac{D - \iota (Q) }{Q}  + \Phi(\iota(Q)) - \delta + \mu_Q  - r }_\text{Expected excess return on capital} \\
+%	\sigma_\theta^W  &= \frac{V_{nz}}{V_n} \sigma_z .
+%\end{align*}
+%Of course, they don't have earnings risk. 
+\end{enumerate}
 
 
 

@@ -85,7 +85,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{202A: Dynamic Programming and Applications\\[5pt] {\Large \textbf{Homework \#1}}}
+\title{202A: Dynamic Programming and Applications\\[5pt] {\Large \textbf{Homework \#3}}}
 
 \author{Andreas Schaab}
 
@@ -97,8 +97,124 @@
 \maketitle
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1}
+
+This problem collects several exercises on Brownian motion and stochastic calculus.
+
+\begin{enumerate}[(a)]
+\item Show that $\mathbb Cov(B_s, B_t) = \min\{s, t\}$ for two times $0 \leq s < t$. Use the following tricks: Use the covariance formula $\mathbb Cov(A, B) = \mathbb E (AB) - \mathbb E(A) \mathbb E(B)$. Use $B_t \sim \mathcal N(0, t)$ as well as $B_t - B_s \sim \mathcal N(0, t-s)$. And use $B_t = B_s + (B_t - B_s)$.
+
+\item Geometric Brownian motion evolves as: $dX_t = \mu X_t dt + \sigma X_t dB_t$. Show that
+\begin{equation*}
+	X_t = X_0 e^{\mu t - \frac{\sigma^2}{2} t + \sigma B_t}
+\end{equation*}
+for a given initial value $X_0$.
+
+\item For Geometric Brownian motion as defined above, show that $\mathbb E = X_0 e^{\mu t}$.
+
+\item The Ornstein-Uhlenbeck (OU) process is like a continuous-time variant of the AR(1) process. It evolves as $dX_t = - \mu X_t dt + \sigma dB_t$ for drift parameter $\mu$, diffusion parameter $\sigma$, and some $X$. Show that it solves 
+\begin{equation*}
+	X_t = X_0 e^{- \mu t} + \sigma \int_0^t e^{-\mu(t - s)} dB_s.
+\end{equation*}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{10mm}
+\section*{Problem 3: heuristic proof of Ito's lemma **}
+
+\textbf{Credit:} derivation follows David Laibson's class notes. For a more formal treatment, see especially Oksendal. 
+
+\vspace{5mm}
+\noindent
+Consider a pretty general Ito process
+\begin{equation*}
+	dx = a(x, t) dt + b(x, t) dB,
+\end{equation*}
+where $dB$ is standard Brownian motion. We call $a(\cdot)$ the drift and $b(\cdot)$ the diffusion coefficients. Suppose $x(t)$ describes the price of oil (or the stock market) over time. Let's denote by $V(x, t)$ the \textit{value} of an oil well (or a particular portfolio) at time $t$, given the value of oil. 
+
+We would like to characterize how $V(x, t)$ evolves over time. If there was no uncertainty, we would just take a time derivative and have $\frac{d}{dt} V(x, t) = \partial_t V(x, t) + \partial_x V(x, t) \frac{dx}{dt}$ by the chain rule. With uncertainty, we will have one additional term. 
+
+\begin{prop}
+	Ito's lemma: We have 
+	\begin{align*}
+		dV &= \partial_t V dt + \partial_x V dx + \frac{1}{2} \partial_{xx} V b(x, t)^2 dt \\
+		&= \bigg[ \partial_t V + \partial_x V a(x, t) + \frac{1}{2} \partial_{xx} V b(x, t)^2\bigg] dt + \partial_x V b(x, t) dB.
+	\end{align*}
+\end{prop}
+
+\vspace{5mm}
+\noindent
+We will now work through a heuristic proof.
+\begin{enumerate}
+\item Consider the function $V(x, t)$ and take a Taylor expansion.
+
+\item Use the fact that terms of order $(dt)^\frac{3}{2}$ become really small in continuous time and ``drop out''. Show that $dx dt$ drops out. What are we left with
+
+\item Plug in for $dx$ and $(dx)^2$ and arrive at Ito's lemma. Use $(dB)^2 \sim dt$.
+
+\end{enumerate}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{10mm}
+\section*{Problem 4: more practice with Ito's lemma ** (Canonical)}
+
+Take the setting from above where we try to model the value of an oil well. Suppose that 
+\begin{equation*}
+	V(x, t) = \log(x).
+\end{equation*}
+
+\begin{enumerate}
+\item Derive $V'(x)$ and $V''(x)$. Why do we need them? Why are we suddenly working with ordinary derivative terms rather than partial derivatives? 
+
+\item Suppose $dx = \alpha x dt + \sigma x dB$. Plug into Ito's Lemma.
+
+\item Plug in for $V'(x)$ and $V''(x)$ and arrive at the solution for $dV$. 
+
+\item Notice that $\mathbb E[ dV ] = \alpha - \frac{1}{2} \sigma^2$ because $\mathbb E (dB) = 0$. Interpret this. Why is the drift of $V$ less than $\alpha$ even thow the drift of the oil price is $\alpha$? (Hint: What is the important economic property of log preferences that we care about here?)
+
+\end{enumerate}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{10mm}
+\section*{Problem 5: let's derive the HJB **}
+
+Let $u(x, c, t)$ denote the instantaneous utility flow of an agent. $x$ is a state variable and $c$ is the control variable. For the state variable $x$, assume the same Ito process as above. In the continuous time limit with $\Delta t$ time steps, let $x' = x + \Delta x$ and $t' = t + \Delta t$.
+
+\begin{enumerate}
+\item Write down the discrete-time Bellman equation with $\Delta t$ time steps. Explain each term where a $\Delta t$ shows up. 
+
+\item Multiply by $(1 + \rho \Delta t)$ and simplify terms to arrive at an expression $\rho V \Delta t = \ldots$. 
+
+\item Divide by $\Delta t$. Then take the continuous time limit $\Delta t \to dt$ and notice that $(dt)^2 \approx 0$. 
+
+\item Use Ito's lemma to rewrite $\mathbb E[dV]$ as 
+\begin{equation*}
+	\mathbb E[dV] = \bigg[ \partial_t V + \partial_x V a + \frac{1}{2} \partial_{xx} V b^2 \bigg] dt.
+\end{equation*}
+We have now derived the HJB equation with risk:
+\begin{equation*}
+		\rho V(x, t) = \max_c \bigg\{ u(x, c, t) + \partial_t V + a \partial_x V + \frac{b^2}{2} \partial_{xx} V \bigg\}
+\end{equation*}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{10mm}
 \section*{Problem 1: XXX}
 
 \begin{enumerate}[(a)]
