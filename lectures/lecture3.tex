@@ -284,7 +284,11 @@ Part 2: Optimization with deterministic dynamics
 
 Part 3: Applications
 \begin{enumerate}
-	\item XXX
+\item Labor: search and matching
+\item Urban / trade / dynamic spatial: migration
+\item Macro: sticky prices
+\item IO: duopoly
+\item Public finance: tax competition
 \end{enumerate}
 
 \end{frame}
@@ -292,7 +296,7 @@ Part 3: Applications
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{transitionframe}
-	{\color{white} \Huge \textbf{Part 1: differential equations} \vspace{2mm}}
+	{\color{white} \Huge \textbf{Part 1: Differential Equations} \vspace{2mm}}
 \end{transitionframe}
 
 
@@ -621,7 +625,7 @@ $\implies$ increasingly used in economics
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{transitionframe}
-	{\color{white} \Large \textbf{Part 2: optimization with deterministic dynamics} \vspace{2mm}}
+	{\color{white} \Large \textbf{Part 2: Optimization with Deterministic Dynamics} \vspace{2mm}}
 \end{transitionframe}
 
 
@@ -1135,16 +1139,276 @@ where we impose an upper boundary $\bar k$
 \end{transitionframe}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{}
-XX
+\begin{frame}{1. Labor: search and matching}
+
+\begin{witemize}
+\item One of most important ideas in labor: frictional search and matching 
+
+	{\footnotesize Diamond-Mortensen-Pissarides (DMP) model}
+
+\item This is just a simple application of dynamic programming
+\end{witemize}
+
 \end{frame}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\textbf{Firms:} Can post vacancies at cost (rate) $c$, vacancy filled at rate $q$. Value of a vacancy is given by HJB
+\begin{equation*}
+	r V = - c + q(J-V).
+\end{equation*}
+Assume firms post until $V = 0$. Once matched, workers produce revenue at rate $p$ and cost wage $w$. Match separates at rate $s$. Value of job is given by HJB 
+\begin{equation*}
+	r J = p - w - s J
+\end{equation*}
+
+\vspace{5mm}
+\textbf{Labor demand:} 
+In equilibrium, labor demand schedule given by
+\begin{equation*}
+	p-w = (r+s) \frac{c}{q}
+\end{equation*}
+Profit $p-w$ equalized with amortized cost of search / posting vacancies 
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{5. Example: tax competition}
+\begin{frame}{}
+
+\textbf{Workers:}
+When worker is unemployed, gets benefit $b$ and can search at intensity $\lambda$, which costs $\psi(\lambda)$. When employed, gets wage $w$ but separates at rate $s$. Let $U$ be value of unemployment and $E$ value of employment:
+\begin{align*}
+	r U &= \max_\lambda \Big\{ b - \psi(\lambda) + \lambda(E - U) \Big\} \\
+	r E &= w + s(U - E)
+\end{align*}
+
+\vspace{5mm}
+\textbf{Labor supply schedule} characterized by FOC for search intensity
+\begin{align*}
+	\psi'(\lambda) = E - U
+\end{align*}
+where $E$ and $U$ solve the coupled system of HJBs
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2. Urban / trade / dynamic spatial: migration}
+\begin{witemize}
+\item One of most important themes in urban, trade, international and dynamic spatial literatures: people move (migrate) in response to shocks
+
+	{\footnotesize For example: To what extent do households migrate in response to China trade shock or climate change?}
+
+\item Turns out: state-of-the-art dynamic migration model (Caliendo-Dvorkin-Parro) is a simple application of our tools
+
+\item Here: also add dynamic consumption-savings problem
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\textbf{Households:} 
+There are $N$ regions indexed by $j$. Consider a household $i$ and denote her region $j_{i, t}$. Lifetime utility is 
+\begin{equation*}
+	V_{i, 0} = \max \mathbb E \int_0^\infty e^{- \rho t} u(c_{i, t}) dt
+\end{equation*}
+
+\begin{witemize}
+\item Household inelastically supplies $1$ unit of labor, earns wage $w_{j_{i, t}}$
+
+\item They have a checking account and face budget constraint 
+\begin{equation*}
+	\dot a_{i, t} = r a_{i, t} + w_{j_{i, t}} - c_{i, t}
+\end{equation*}
+
+\item Problem will be stationary because $r$ and $w_j$ are time-invariant
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\textbf{Migration:} discrete-choice optimal stopping problem
+\vspace{4mm}
+\begin{witemize}
+\item Households face fixed cost $\kappa_{jk}$ to move from $j$ to $k$
+
+\item \textbf{Key trick:} At rate $\mu$, household draws opportunity and \textbf{extreme-value taste shock} $\epsilon_k$ with shape parameter $\theta$ for possible destinations $k$
+\end{witemize}
+
+\vspace{5mm}
+\textbf{Recursive representation:}
+\begin{equation*}
+	\rho V(j, a) = \max_c \Big\{ u(c) 
+	\underbrace{\vphantom{\max_k}
+		+ (r a + w_j - c) V_a(j, a) 
+	}_\text{consumption-savings}
+	\underbrace{
+		+ \mu \Big( \mathbb E \Big[ \max_k V(k, a) - \kappa_{jk} + \epsilon_k \Big] - V(j, a) \Big) \Big\}
+	}_\text{migration}
+\end{equation*}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{3. Macro: sticky prices} 
+\begin{witemize}
+\item In the data, firms do not adjust prices instantly 
+
+\item Price stickiness (nominal rigidities) is at the heart of the New Keynesian model 
+
+\item We will derive the New Keynesian Phillips Curve as simple application of our tools $\implies$ much easier to derive in continuous time!!
+
+\item Consider a continuum of firms indexed by $j$ that compete monopolistically
+
+\item Firm $j$ faces demand function 
+\begin{equation*}
+	Y_{j, t} = \bigg( \frac{P_{j, t}}{P_t} \bigg)^{- \epsilon} Y_t
+\end{equation*}
+where $Y_t$ and $P_t$ are aggregate (industry) demand and price index
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Firms produce intermediate varieties with the linear production function 
+\begin{equation*}
+	Y_{j, t} = A_t N_{j, t}
+\end{equation*}
+
+\item $A_t$ is aggregate productivity and $N_{j, t}$ firm $j$'s labor demand 
+
+\item Firm $j$ sells at price $P_{j, t}$, profit = revenue net of operating expenses
+\begin{equation*}
+	\Pi_{j, t} = P_{j, t} Y_{j, t} - W_t N_{j, t}
+\end{equation*}
+
+\item Firms maximize NPV of future profit streams, discounted at interest rate $r$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Firms set prices optimally over time by choosing inflation $\dot P_{j, t} = P_{j, t} \pi_{j, t}$
+\item Firms pay quadratic adjustment cost $\frac{\delta}{2} \pi_{j, t}^2 P_t Y_t$ to adjust nominal price
+
+\item Firm problem:
+\begin{equation*}
+	\max_{ \{ \pi_{j, t}, N_{j, t} \}_{t \geq 0} } \int_0^\infty e^{- r ds} \bigg( P_{j, t} Y_{j, t} - W_t N_{j, t} - \frac{\delta}{2} \pi_{j, t}^2 P_t \bigg) dt,
+\end{equation*}
+
+\item Firms are small and take as given $\{ W_t, Y_t, P_t \}_{t \geq 0}$ and initial condition $P_{j, 0}$
+
+\item Any two firms $j$ and $j'$ with same initial price $P_{j, 0} = P_{j', 0}$ adopt identical inflation and production policies $\implies$ we get back to representative firm
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item Hamiltonian (state: $P_{j, t}$, control: $\pi_{j, t}$, multiplier: $\eta_{j, t}$):
+\begin{equation*}
+	\mathcal H_t(P_{j, t}, \pi_{j, t}, \eta_{j, t}) = P_{j, t}^{1-\epsilon} P_t^{\epsilon} Y_t - \frac{W_t}{A_t} P_{j, t}^{-\epsilon} P_t^{\epsilon} Y_t  - \frac{\delta}{2} \pi_{j, t}^2 P_t Y_t + \eta_{j, t} P_{j, t} \pi_{j, t}
+\end{equation*}
+
+\item Conditions for optimum:
+\begin{align*}
+	i_t \eta_{j, t} - \dot \eta_{j, t} &= (1-\epsilon) P_{j, t}^{-\epsilon} P_t^{\epsilon} Y_t + \epsilon \frac{W_t}{A_t} P_{j, t}^{-\epsilon - 1} P_t^{\epsilon} Y_t + \eta_{j, t} \pi_{j, t}  \\
+	0 &= - \delta \pi_{j, t} P_t Y_t + \eta_{j, t} P_{j, t},
+\end{align*}
+as well as the initial condition for the multiplier $\eta_{j, 0} = 0$
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+
+\item Now we can impose symmetric equilibrium: $P_{j, t} = P_t$ for all $j$
+\begin{align*}
+	i_t \eta_t - \dot \eta_t  &= (1-\epsilon) P_t^{-\epsilon} P_t^{\epsilon} Y_t + \epsilon \frac{W_t}{A_t} P_t^{-\epsilon - 1} P_t^{\epsilon} Y_t + \eta_t \pi_t  \\
+	0 &= - \delta \pi_t P_t Y_t + \eta_t P_t
+\end{align*}
+
+\item Or simply:
+\begin{align*}
+	i_t \eta_t - \dot \eta_t  &= (1-\epsilon) Y_t + \epsilon \frac{w_t}{A_t} Y_t + \eta_t \pi_t  \\
+	\eta_t &= \delta \pi_t Y_t
+\end{align*}
+
+\item Differentiating eq. 2 ($\dot \eta_t = \delta \dot \pi_t Y_t + \delta \pi_t \dot Y_t$) yields:
+\begin{equation*}
+	 \dot \pi_t = \pi_t \bigg( i_t -  \pi_t - \frac{\dot Y_t}{Y_t} \bigg) - \frac{\epsilon}{\delta} \bigg( \frac{w_t}{A_t} - \frac{\epsilon - 1}{\epsilon} \bigg)
+\end{equation*}
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+
+\item From previous slide: 
+\begin{equation*}
+	 \dot \pi_t = \pi_t \bigg( i_t -  \pi_t - \frac{\dot Y_t}{Y_t} \bigg) - \frac{\epsilon}{\delta} \bigg( \frac{w_t}{A_t} - \frac{\epsilon - 1}{\epsilon} \bigg)
+\end{equation*}
+
+\item Last step: recall Euler equation of the representative household
+\begin{equation*}
+	\frac{\dot C_t}{C_t} = r_t - \rho
+\end{equation*}
+and use goods market clearing
+\begin{equation*}
+	Y_t = C_t
+\end{equation*}
+
+\item \textbf{NKPC:}
+\begin{equation*}
+	 \dot \pi_t = \rho \pi_t - \frac{\epsilon}{\delta} \bigg( \frac{w_t}{A_t} - \frac{\epsilon - 1}{\epsilon} \bigg)
+\end{equation*}
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{4. IO: duopoly} 
+
+\begin{witemize}
+\item Consider continuous-time variant of Ericson-Pakes (1995) quality-ladder model 
+
+\item Duopolistic competition: $2$ firms $i \in \{A, B\}$ produce good with quality $q_t^i$ and maximize NPV of profits: $\max \int_0^\infty e^{- rt} \pi_t^i dt$. They compete over investments $\iota_t^i$:
+\begin{equation*}
+	\dot q^i = \iota_t^i - \delta q_t^i
+\end{equation*}
+
+
+\item Profits $\pi_t^i$ depend on both firms' product qualities $\rightarrow$ state variables for recursive representation are $\omega \equiv (\omega^A, \omega^B)$
+
+\item Best-response of firm $A$ to firm $B$ characterized by HJB
+\begin{equation*}
+	r V^A(\omega) = \pi^A(\omega) + \max_\iota \Big\{ (\iota - \delta \omega^A) V_{\omega^A}^A(\omega) - \Phi(\iota) \Big\} + (\iota^B - \delta \omega^B) V_{\omega^B}^A(\omega) 
+\end{equation*}
+where $\Phi(\cdot)$ is cost of investment, and best-response takes $\iota^B$ as given
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{5. Public finance: tax competition}
 
 {\small
 \begin{witemize}

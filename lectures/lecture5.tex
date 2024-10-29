@@ -278,9 +278,11 @@ Part 2: Optimization with stochastic dynamics
 Part 3: Applications
 \begin{enumerate}
 	\item Consumption-savings with stochastic income fluctuations
-	\item Portfolio choice
 	\item Firm profit maximization
-	\item XXX
+	\item Capital investment with adjustment cost
+	\item Investing in stocks
+	\item Real business cycles
+	\item AK technology 
 \end{enumerate}
 
 \end{frame}
@@ -1106,10 +1108,93 @@ with FOCs: (i) $u'(c) = V'(a)$ and (ii) $\theta = -\frac{\pi}{\sigma^2} \frac{ V
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{5. Real Business Cycles}
-
+\begin{frame}{5. Real business cycles}
 \begin{witemize}
-\item 
+\item Next semester, Yuriy will teach the Real Business Cycle model. This is basically the stochastic neoclassical growth model, estimated to match business cycle moments 
+
+\item Recall that this model is efficient so we can look at the planning problem
+
+\item Preferences are:
+\begin{equation*}
+	\mathbb E_0 \int_0^\infty e^{- \rho t} u(c_t) dt
+\end{equation*}
+
+\item And combining technologies and resource constraints yields:
+\begin{equation*}
+	dk_t = \Big[ f(k_t, z_t) - \delta k_t - c_t \Big] dt
+\end{equation*}
+
+\item Now suppose TFP follows a Feller process: $dz_t = \theta(\bar z - z_t) dt + \sigma \sqrt{z_t} dB_t$
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{witemize}
+\item With $dz_t = {\color{blue} \theta(\bar z - z_t) } dt + {\color{red} \sigma \sqrt{z_t} } dB_t$, the HJB is then given by:
+\begin{equation*}
+	\rho V(k, z) = \max_c \bigg\{ u(c) + \Big[ f(k, z) - \delta k - c \Big] V_k(k, z) + {\color{blue} \theta(\bar z - z) } V_z(k, z) + \frac{1}{2} {\color{red} \sigma^2 z } V_{zz}(k, z) \bigg\}
+\end{equation*}
+
+\item We have now seen 3 variants of this model with 3 different assumptions for the process $dz_t$
+
+\item This model is the foundation for business cycle macro 
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{6. AK technology and log utility}
+\begin{witemize}
+\item Assume that $u(c_t) = \log c_t$ and $f(k_t, z_t) = z_t k_t$
+
+\item Assuming that $dz_t$ follows a stationary diffusion process:
+\begin{equation*}
+	\rho V(k, z) = \max_c \bigg\{ \log c + \Big[ f(k, z) - \delta k - c \Big] V_k(k, z) + \mu(z) V_z(k, z) + \frac{1}{2} \sigma(z)^2 V_{zz}(k, z) \bigg\}
+\end{equation*}
+
+\item Show that the consumption policy function is:
+\begin{equation*}
+	c(k, z) = \rho k
+\end{equation*}
+
+\item As a result, model solution characterized by the two \textit{forward} equations:
+\begin{align*}
+	dk_t &= (z_t - \rho - \delta) k_t dt \\
+	dz_t &= \mu(z_t) dt + \sigma(z_t) dB_t
+\end{align*}
+
+\end{witemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%  SLIDE   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\textbf{Proof:}
+\begin{witemize}
+\item Guess and verify:
+\begin{equation*}
+	V(k, z) = v(z) + A \log k
+\end{equation*}
+
+\item FOC: 
+\begin{equation*}
+	u'(c(k, z)) = V_k(k, z) 
+	\quad \implies \quad
+	\frac{1}{c(k, z)} = A \frac{1}{k}
+	\quad \implies \quad
+	c(k, z) = \frac{1}{A} k
+\end{equation*}
+
+\item Plug back into HJB: 
+\begin{equation*}
+\rho v(z) + \rho A \log k = \log \frac{1}{A} + \log k + (z - \frac{1}{A} - \delta) k A \frac{1}{k} + \mu(z) v'(z) + \frac{1}{2} \sigma(z)^2 v''(z)
+\end{equation*}
+
+\item Collect terms in $\log k$ and confirm $\rho A = 1$. Solve ODE for $v(z)$!
+
+\item Economics: log preferences $\implies$ income and substitution effects of future $z_t$ changes cancel $\implies$ constant savings rate $\rho$
 \end{witemize}
 \end{frame}
 
